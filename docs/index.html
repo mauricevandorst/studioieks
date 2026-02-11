@@ -89,12 +89,12 @@
       </ul>
       <div class="flex items-center gap-3 reveal">
         <a href="tel:+31600000000" aria-label="Bel StudioIEKS" target="_blank" rel="noopener noreferrer"
-          class="inline-block px-6 py-3 border border-accent rounded-[2px] font-semibold bg-accent text-dark hover:opacity-80 transition-colors">
+          class="inline-block px-6 py-3 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
           Boek je sessie
         </a>
         <a href="https://wa.me/31600000000?text=Hi%20StudioIEKS%2C%20ik%20wil%20graag%20een%20sessie%20boeken."
           target="_blank" rel="noopener noreferrer" aria-label="Chat op WhatsApp"
-          class="inline-flex items-center justify-center w-12 h-12 border border-accent rounded-[2px] text-accent hover:bg-accent hover:text-dark transition-colors">
+          class="inline-flex items-center justify-center w-12 h-12 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-6 h-6" fill="currentColor"
             aria-hidden="true">
             <path
@@ -330,23 +330,58 @@
           de vibes, workflow en sound van de ruimte.</p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-        <article
-          class="media-tile group lg:col-span-3 xl:col-span-3 border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal">
-          <div class="relative aspect-[9/16] bg-gradient-to-br from-accent/15 via-dark to-accent2/15">
-            <img src="./assets/images/studio-shot-1.jpg" alt="Vocal booth in StudioIEKS"
-              class="w-full h-full object-cover" loading="lazy"
-              onerror="this.style.display='none'; this.parentElement.classList.add('media-placeholder');">
-          </div>
-          <div class="p-4 sm:p-5 space-y-2">
-            <p class="text-xs uppercase tracking-[0.18em] text-accent">Foto</p>
-            <h3 class="font-display uppercase text-xl text-white">Booth sfeer</h3>
-            <p class="text-sm text-gray-400">Vocal booth met gecontroleerde akoestiek voor heldere takes en focus tijdens de sessie.</p>
-          </div>
-        </article>
+      <div class="studio-vibes-grid grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+        <div class="studio-vibes-reels lg:col-span-8">
+          <div class="reels-strip">
+            <article class="media-tile reel-card group border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal">
+              <div class="relative aspect-[9/16] bg-black">
+                <iframe src="https://www.instagram.com/reel/DQcTwQCDJZ2/embed"
+                  title="Instagram reel: Session fragment one"
+                  class="absolute inset-0 w-full h-full border-0" loading="lazy" allowfullscreen></iframe>
+                <div class="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
+                  <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-dark"
+                    aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </article>
 
-        <div class="lg:col-span-4 xl:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-6">
-          <article class="media-tile group border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal">
+            <article class="media-tile reel-card group border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal">
+              <div class="relative aspect-[9/16] bg-black">
+                <iframe src="https://www.instagram.com/reel/DToGQ1nDFgT/embed"
+                  title="Instagram reel: Session fragment two"
+                  class="absolute inset-0 w-full h-full border-0" loading="lazy" allowfullscreen></iframe>
+                <div class="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
+                  <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-dark"
+                    aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="studio-vibes-photos lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-6">
+          <article class="media-tile photo-card group border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal">
+            <div class="relative aspect-[9/16] bg-gradient-to-br from-accent/15 via-dark to-accent2/15">
+              <img src="./assets/images/studio-shot-1.jpg" alt="Vocal booth in StudioIEKS"
+                class="w-full h-full object-cover" loading="lazy"
+                onerror="this.style.display='none'; this.parentElement.classList.add('media-placeholder');">
+            </div>
+            <div class="p-4 sm:p-5 space-y-2">
+              <p class="text-xs uppercase tracking-[0.18em] text-accent">Foto</p>
+              <h3 class="font-display uppercase text-xl text-white">Booth sfeer</h3>
+              <p class="text-sm text-gray-400">Vocal booth met gecontroleerde akoestiek voor heldere takes en focus tijdens de sessie.</p>
+            </div>
+          </article>
+
+          <article class="media-tile photo-card group border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal">
             <div class="relative aspect-video bg-gradient-to-br from-accent2/20 via-dark to-dark/80">
               <img src="./assets/images/studio-shot-2.jpeg" alt="Producer desk in StudioIEKS"
                 class="w-full h-full object-cover" loading="lazy"
@@ -355,42 +390,9 @@
             <div class="p-4 space-y-2">
               <p class="text-xs uppercase tracking-[0.18em] text-accent">Foto</p>
               <h3 class="font-display uppercase text-lg text-white">Desk detail</h3>
-            <p class="text-sm text-gray-400">Desk setup met directe controle over opname, routing en monitoring in een strakke workflow.</p>
+              <p class="text-sm text-gray-400">Desk setup met directe controle over opname, routing en monitoring in een strakke workflow.</p>
             </div>
           </article>
-
-        <article
-          class="media-tile group lg:col-span-5 xl:col-span-6 border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal">
-          <div class="relative aspect-[9/16] bg-black">
-            <iframe src="https://www.instagram.com/reel/DQcTwQCDJZ2/embed" title="Instagram reel: Session fragment"
-              class="absolute inset-0 w-full h-full border-0" loading="lazy" allowfullscreen></iframe>
-            <div class="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
-              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-dark"
-                aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </span>
-            </div>
-          </div>
-        </article>
-
-          <article
-            class="media-tile group lg:col-span-5 xl:col-span-6 border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal">
-            <div class="relative aspect-[9/16] bg-black">
-              <iframe src="https://www.instagram.com/reel/DToGQ1nDFgT/embed" title="Instagram reel: Session fragment"
-                class="absolute inset-0 w-full h-full border-0" loading="lazy" allowfullscreen></iframe>
-              <div class="absolute inset-0 z-10 pointer-events-none flex items-center justify-center">
-                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-dark"
-                  aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </article>
-
         </div>
       </div>
 

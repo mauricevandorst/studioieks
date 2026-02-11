@@ -211,6 +211,78 @@
   color: var(--tw-color-accent2);
 }
 
+#studio-vibes {
+  --studio-vibes-inline-pad: 1rem;
+}
+
+#studio-vibes .studio-vibes-grid {
+  align-items: start;
+}
+
+#studio-vibes .studio-vibes-reels,
+#studio-vibes .studio-vibes-photos {
+  min-width: 0;
+}
+
+#studio-vibes .reels-strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(82vw, 360px);
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--studio-vibes-inline-pad);
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+}
+
+#studio-vibes .reels-strip::-webkit-scrollbar {
+  height: 6px;
+}
+
+#studio-vibes .reels-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#studio-vibes .reels-strip::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.28);
+  border-radius: 9999px;
+}
+
+#studio-vibes .reel-card {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 640px) {
+  #studio-vibes {
+    --studio-vibes-inline-pad: 1.5rem;
+  }
+
+  #studio-vibes .reels-strip {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  #studio-vibes {
+    --studio-vibes-inline-pad: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  #studio-vibes .reels-strip {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: visible;
+    scroll-snap-type: none;
+    scroll-padding-inline: 0;
+    padding-bottom: 0;
+  }
+}
+
 #downloadBtn {
   transition: opacity 0.2s ease;
 }
