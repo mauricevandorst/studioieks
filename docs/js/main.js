@@ -56,8 +56,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let cycleWidth = 0; // width of one logical cycle
     let offset = 0;
     let lastTime = performance.now();
+    let animationStarted = false;
     const speed = 70; // px/sec
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const animateMarquee = time => {
+      const dt = (time - lastTime) / 1000;
+      lastTime = time;
+      if (!document.hidden) {
+        offset += speed * dt;
+        if (offset >= cycleWidth) offset -= cycleWidth;
+        marqueeInner.style.transform = `translate3d(${-offset}px,0,0)`;
+      }
+      requestAnimationFrame(animateMarquee);
+    };
+
+    const startAnimationIfReady = () => {
+      if (reduceMotion || animationStarted || cycleWidth <= 0) return;
+      animationStarted = true;
+      lastTime = performance.now();
+      requestAnimationFrame(animateMarquee);
+    };
 
     const buildMarqueeTrack = () => {
       marqueeInner.innerHTML = baseHTML;
@@ -74,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (cycleWidth > 0) offset %= cycleWidth;
+      startAnimationIfReady();
     };
 
     buildMarqueeTrack();
@@ -85,21 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
       img.addEventListener('load', buildMarqueeTrack, { once: true });
       img.addEventListener('error', buildMarqueeTrack, { once: true });
     });
-
-    if (!reduceMotion && cycleWidth > 0) {
-      const animateMarquee = time => {
-        const dt = (time - lastTime) / 1000;
-        lastTime = time;
-        if (!document.hidden) {
-          offset += speed * dt;
-          if (offset >= cycleWidth) offset -= cycleWidth;
-          marqueeInner.style.transform = `translate3d(${-offset}px,0,0)`;
-        }
-        requestAnimationFrame(animateMarquee);
-      };
-      window.addEventListener('resize', buildMarqueeTrack, { passive: true });
-      requestAnimationFrame(animateMarquee);
-    }
+    window.addEventListener('resize', buildMarqueeTrack, { passive: true });
+    startAnimationIfReady();
   }
 
   // Accordion toggling
