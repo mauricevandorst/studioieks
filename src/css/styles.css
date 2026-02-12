@@ -1,4 +1,25 @@
 /* Custom styles not covered by Tailwind */
+/* Fallback layout safety when Tailwind utilities are not compiled (e.g. viewing src/*.html directly). */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
 /* Noise overlay using inline SVG turbulence filter. The SVG uses fractalNoise to create grain and is encoded as a data URI. */
 .noise-layer {
   pointer-events: none;
@@ -242,4 +263,65 @@
   pointer-events: none;
   cursor: not-allowed;
   opacity: 0.75;
+}
+
+@media (max-width: 767px) {
+  .has-mobile-sticky-nav {
+    padding-top: 7.75rem;
+  }
+
+  .mobile-glass-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(180deg, rgba(11, 14, 17, 0.86), rgba(11, 14, 17, 0.62));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .mobile-sticky-nav {
+    position: fixed;
+    top: 73px;
+    left: 0;
+    right: 0;
+    z-index: 30;
+  }
+
+  .mobile-nav-scroller {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-nav-scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-nav-link {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba(0, 255, 163, 0.32);
+    border-radius: 9999px;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(11, 14, 17, 0.58);
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+  }
+
+  .mobile-nav-link:active,
+  .mobile-nav-link:focus-visible {
+    border-color: rgba(0, 255, 163, 0.72);
+    color: var(--tw-color-accent);
+    background: rgba(11, 14, 17, 0.78);
+    outline: none;
+  }
 }
