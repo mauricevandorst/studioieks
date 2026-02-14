@@ -124,7 +124,72 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
- 
+  // Mobile overlay menu behavior (open/close, escape, outside click, link click).
+  const mobileMenuTrigger = document.querySelector('.mobile-menu-trigger');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+  const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+  if (mobileMenuTrigger && mobileMenuOverlay && mobileMenuPanel) {
+    const closeTargets = mobileMenuOverlay.querySelectorAll('[data-mobile-menu-close]');
+    const panelLinks = mobileMenuPanel.querySelectorAll('a');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const CLOSE_DELAY_MS = reducedMotion ? 0 : 240;
+    let isMenuOpen = false;
+    let closeTimer;
+
+    const setMenuState = open => {
+      isMenuOpen = open;
+      mobileMenuTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      mobileMenuPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+      document.body.classList.toggle('mobile-menu-open', open);
+      mobileMenuOverlay.classList.toggle('is-open', open);
+    };
+
+    const openMenu = () => {
+      clearTimeout(closeTimer);
+      mobileMenuOverlay.hidden = false;
+      requestAnimationFrame(() => {
+        setMenuState(true);
+      });
+    };
+
+    const closeMenu = (restoreFocus = false) => {
+      clearTimeout(closeTimer);
+      setMenuState(false);
+      closeTimer = setTimeout(() => {
+        mobileMenuOverlay.hidden = true;
+        if (restoreFocus) mobileMenuTrigger.focus();
+      }, CLOSE_DELAY_MS);
+    };
+
+    mobileMenuTrigger.addEventListener('click', () => {
+      if (isMenuOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    closeTargets.forEach(target => {
+      target.addEventListener('click', () => closeMenu(true));
+    });
+
+    panelLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && isMenuOpen) {
+        closeMenu(true);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && isMenuOpen) {
+        closeMenu();
+      }
+    });
+  }
+
   // Press kit download with loading animation.
   const downloadBtn = document.getElementById('downloadBtn');
   if (downloadBtn) {
