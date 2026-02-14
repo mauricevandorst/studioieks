@@ -1585,6 +1585,10 @@ video {
   border-top-width: 1px;
 }
 
+.border-r-4 {
+  border-right-width: 4px;
+}
+
 .border-accent {
   --tw-border-opacity: 1;
   border-color: rgb(0 255 163 / var(--tw-border-opacity, 1));
