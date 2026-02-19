@@ -1,749 +1,262 @@
 ﻿<!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudioIEKS | Recording Studio in Noord-Holland</title>
-  <!-- Google fonts via CDNFonts for display and body text -->
-  <!-- Bebas Neue provides the editorial uppercase headlines【106501331665022†L31-L39】 -->
-  <link href="https://fonts.cdnfonts.com/css/bebas-neue" rel="stylesheet">
-  <!-- Inter provides a clean sans-serif body typeface【745032630318866†L55-L63】 -->
-  <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet">
-  <!-- jsPDF and autoTable libraries from CDN to generate the PDF【69525575236709†L409-L416】【815330410974954†L34-L42】 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/4.1.0/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/5.0.2/jspdf.plugin.autotable.min.js"></script>
-  <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.ico">
-  <link rel="stylesheet" href="./css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artist | ST.Van</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for social and copy icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-p6w0zg5H10bkYVt/c9lqLDsuyZbEI//F8qS4xdI9gNzZfpm2iACz9G+XvCTe0OPBf2Mfr2ndfJQpe4ef4uHb6w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Base colours derived from the original site */
+    :root {
+      --black: #030302;
+      --white: #ffffff;
+      --grey: #4b4b4b;
+      --purp: #60267f;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--black);
+      /* subtle noise pattern using radial gradient */
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px);
+      background-size: 4px 4px;
+      color: var(--white);
+      line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Buttons */
+    .btn {
+      @apply inline-block uppercase tracking-wider font-semibold transition-all duration-300 px-8 py-3 text-sm;
+    }
+
+    .btn-primary {
+      @apply bg-white text-black border border-transparent hover:px-5;
+    }
+
+    .btn-secondary {
+      @apply text-white border border-gray-500 hover:border-gray-300 hover:text-gray-300;
+    }
+
+    /* Social icon squares */
+    .social-icon {
+      @apply flex items-center justify-center w-10 h-10 border border-gray-500 rounded transition-colors duration-200;
+    }
+
+    .social-icon:hover {
+      @apply border-gray-300 text-gray-300;
+    }
+
+    /* Footer styling */
+    .footer-link {
+      @apply hover:text-gray-300 underline underline-offset-2;
+    }
+  </style>
 </head>
 
-<body class="bg-dark text-gray-300 font-sans overflow-x-hidden has-mobile-sticky-nav">
-  <!-- Scroll progress bar -->
-  <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-accent z-50"></div>
-
-  <!-- Mobile sticky header + navbar -->
-  <header class="md:hidden mobile-glass-bar flex flex-row justify-between">
-    <a href="./" class="inline-flex items-center gap-3 group" aria-label="StudioIEKS home">
-      <span class="relative w-10 h-10 flex items-center justify-center
-               bg-black/60 backdrop-blur-xl
-               rounded-2xl
-               border border-white/10
-               shadow-[0_0_30px_rgba(0,0,0,0.55)]
-               transition-all duration-500">
-        <svg viewBox="0 0 100 100" class="relative w-6 h-6 text-accent" fill="none" stroke="currentColor"
-          stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M10 50 Q20 20 30 50 T50 50 T70 50 T90 50" />
-          <path d="M65 30 C50 15, 35 40, 55 45 C75 50, 60 75, 40 65" />
-        </svg>
-      </span>
-      <span
-        class="font-display uppercase text-white text-base tracking-[0.12em] font-bold whitespace-nowrap transition-opacity duration-300 group-hover:opacity-80">
-        Studio<span class="text-accent font-extrabold">IEKS</span>
-      </span>
-    </a>
-    <button type="button" class="mobile-menu-trigger" aria-label="Open mobiel menu" aria-expanded="false"
-      aria-haspopup="true" aria-controls="mobile-menu-panel">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M4 7h16M4 12h16M4 17h16"></path>
-      </svg>
-    </button>
+<body>
+  <!-- Header -->
+  <header class="container mx-auto px-4 flex items-center justify-center">
+    <!-- Logo -->
+    <div class="flex items-center space-x-3">
+      <!-- Replace with downloaded logo if available -->
+      <a href="#" class="hover:opacity-80">
+        <img src="assets/images/logo.jpg" alt="StudioIEKS logo" class="h-32 w-auto" />
+      </a>
+    </div>
   </header>
-  <div id="mobile-menu-overlay" class="mobile-menu-overlay md:hidden" hidden>
-    <button type="button" class="mobile-menu-scrim" data-mobile-menu-close aria-label="Sluit mobiel menu"></button>
-    <nav id="mobile-menu-panel" class="mobile-menu-panel" aria-label="Mobiele navigatie" aria-hidden="true">
-      <div class="mobile-menu-head">
-        <div>
-          <a href="./" class="inline-flex items-center gap-3 group" aria-label="StudioIEKS home">
-            <span class="relative w-10 h-10 flex items-center justify-center
-               bg-black/60 backdrop-blur-xl
-               rounded-2xl
-               border border-white/10
-               shadow-[0_0_30px_rgba(0,0,0,0.55)]
-               transition-all duration-500">
-              <svg viewBox="0 0 100 100" class="relative w-6 h-6 text-accent" fill="none" stroke="currentColor"
-                stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 50 Q20 20 30 50 T50 50 T70 50 T90 50" />
-                <path d="M65 30 C50 15, 35 40, 55 45 C75 50, 60 75, 40 65" />
-              </svg>
-            </span>
-            <span
-              class="font-display uppercase text-white text-base tracking-[0.12em] font-bold whitespace-nowrap transition-opacity duration-300 group-hover:opacity-80">
-              Studio<span class="text-accent font-extrabold">IEKS</span>
-            </span>
+
+  <!-- Hero section -->
+  <section class="container mx-auto px-4 pb-10 pt-5 lg:pt-10 flex flex-col md:flex-row items-start gap-12">
+    <!-- Left column: portrait -->
+    <div class="relative w-full md:w-1/2 flex flex-col justify-center md:sticky md:top-8 md:self-start">
+      <div class="relative flex justify-end items-end rounded-xl shadow-lg overflow-hidden">
+        <img src="assets/images/portrait.png" alt="Artist portrait" class="object-cover w-full object-fit" />
+
+        <!-- Signature overlay (placed at bottom right) -->
+        <div class="absolute max-w-xs opacity-80">
+          <!-- Use image or text-based signature -->
+          <img src="assets/images/signature.avif" alt="Signature" class="w-24 sm:w-28 md:w-36 h-auto mix-blend-screen" />
+        </div>
+      </div>
+
+      <!-- CTA buttons -->
+      <div class="flex flex-col items-start gap-2">
+        <div class="w-full flex flex-wrap items-center gap-2 mt-6">
+          <a href="#" class="w-full lg:w-max btn btn-primary hover:opacity-80">
+            <div
+              class="w-full py-3 px-8 uppercase text-sm tracking-wider bg-white text-center text-black font-semibold transition-all duration-300 hover:px-10">
+              Book now
+            </div>
+          </a>
+          <a href="#" class="w-full lg:w-max btn btn-primary hover:opacity-80">
+            <div
+              class="w-full py-3 px-8 uppercase text-sm tracking-wider text-center text-white border-[1px] border-white/30 font-semibold transition-all duration-300 hover:px-10">
+              Download Presskit
+            </div>
           </a>
         </div>
-        <button type="button" class="mobile-menu-close" data-mobile-menu-close aria-label="Sluit mobiel menu">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor"
-            stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M6 6l12 12M18 6L6 18"></path>
-          </svg>
-        </button>
-      </div>
-      <div class="flex flex-col">
-        <a href="./index.html#hero" class="mobile-menu-link"><span>Home</span><span aria-hidden="true">→</span></a>
-        <a href="./index.html#studio-tour" class="mobile-menu-link"><span>Setup</span><span
-            aria-hidden="true">→</span></a>
-        <a href="./index.html#gear" class="mobile-menu-link"><span>Gear list</span><span
-            aria-hidden="true">→</span></a>
-        <a href="./index.html#studio-vibes" class="mobile-menu-link"><span>Studiobeelden</span><span
-            aria-hidden="true">→</span></a>
-        <a href="./press.html" class="mobile-menu-link"><span>Press & media</span><span
-            aria-hidden="true">→</span></a>
-      </div>
-      <a href="tel:+31600000000" aria-label="Bel StudioIEKS" target="_blank" rel="noopener noreferrer"
-        class="inline-block px-6 py-3 border border-accent rounded-[2px] text-accent text-center font-semibold hover:bg-accent hover:text-dark transition-colors">
-        Studio boeken
-      </a>
-    </nav>
-  </div>
-
-  <!-- Hero Section -->
-  <section id="hero"
-    class="relative lg:min-h-[60vh] flex flex-col items-start justify-center pb-12 py-4 px-6 md:px-12 overflow-hidden">
-
-    <div class="flex flex-col max-w-6xl">
-      <!-- Improve my brand logo so it matches Brand logo -->
-      <a href="./"
-        class="hidden md:inline-flex relative z-30 max-w-full items-center gap-3 sm:gap-4 md:gap-5 group mb-6 md:mb-8"
-        aria-label="StudioIEKS home">
-
-        <!-- Icon container -->
-        <span class="relative w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center
-                 bg-black/60 backdrop-blur-xl
-                 rounded-2xl
-                 border border-white/10
-                 shadow-[0_0_40px_rgba(0,0,0,0.6)]
-                 group-hover:shadow-[0_0_60px_var(--tw-color-accent)]
-                 transition-all duration-500">
-
-          <!-- Inner glow -->
-          <span
-            class="absolute inset-0 rounded-[2px] bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          </span>
-          <svg viewBox="0 0 100 100"
-            class="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-accent transition-transform duration-500 group-hover:scale-110"
-            fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 50 Q20 20 30 50 T50 50 T70 50 T90 50" />
-            <path d="M65 30 C50 15, 35 40, 55 45 C75 50, 60 75, 40 65" />
-          </svg>
-        </span>
-
-        <!-- Text -->
-        <span class="font-display uppercase text-white text-lg sm:text-xl md:text-2xl tracking-[0.1em] sm:tracking-[0.14em] md:tracking-[0.18em] font-bold whitespace-nowrap
-                 transition-opacity duration-300 group-hover:opacity-80">
-          Studio<span class="text-accent font-extrabold">IEKS</span>
-        </span>
-
-      </a>
-
-      <!-- Parallax layers -->
-      <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <!-- Radial gradient blob -->
-        <div data-speed="0.2"
-          class="parallax-layer hero-radial-blob absolute -top-32 -left-20 w-[600px] h-[600px] rounded-full">
-        </div>
-        <!-- Conic gradient ring -->
-        <div data-speed="0.1"
-          class="parallax-layer hero-conic-ring absolute top-1/2 left-2/3 w-[500px] h-[500px] rounded-full border-8 border-accent/10">
-        </div>
-        <!-- Noise overlay -->
-        <div class="noise-layer absolute inset-0"></div>
-      </div>
-      <!-- Hero content -->
-      <div class="relative z-10 max-w-2xl space-y-6">
-        <h1
-          class="text-5xl sm:text-7xl font-display font-bold uppercase leading-tight tracking-tight text-white reveal">
-          Underground vibes. High‑end sound.</h1>
-        <p class="text-lg sm:text-xl text-gray-300 max-w-lg reveal">Relaxte, professionele studio waar artiesten zich thuis
-          voelen.</p>
-        <ul class="space-y-2 reveal">
-          <li class="flex items-start"><span class="mr-2 text-accent">•</span> No pressure omgeving, geen label vibes
-          </li>
-          <li class="flex items-start"><span class="mr-2 text-accent">•</span> Professioneel en geschikt voor serieuze
-            releases</li>
-          <li class="flex items-start"><span class="mr-2 text-accent">•</span> Vrijheid voor artiesten. Eigen workflow
-            welkom</li>
-        </ul>
-        <div class="flex items-center gap-3 reveal">
-          <a href="tel:+31600000000" aria-label="Bel StudioIEKS" target="_blank" rel="noopener noreferrer"
-            class="inline-block px-6 py-3 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
-            Boek de studio
+        <div class="flex items-center justify-center flex-wrap gap-4">
+          <a href="#" aria-label="Instagram"
+            class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
+            <img src="https://cdn.simpleicons.org/instagram/white" alt="Instagram" class="w-6 h-6" />
           </a>
-          <a href="https://wa.me/31600000000?text=Hi%20StudioIEKS%2C%20ik%20wil%20graag%20een%20sessie%20boeken."
-            target="_blank" rel="noopener noreferrer" aria-label="Chat op WhatsApp"
-            class="inline-flex items-center justify-center w-12 h-12 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-6 h-6" fill="currentColor"
-              aria-hidden="true">
-              <path
-                d="M16 3C8.83 3 3 8.73 3 15.8c0 2.5.73 4.94 2.11 7.03L3 29l6.37-2.06a13.12 13.12 0 0 0 6.63 1.78h.01c7.17 0 12.99-5.73 12.99-12.8C29 8.73 23.17 3 16 3zm0 23.55h-.01a10.9 10.9 0 0 1-5.55-1.52l-.4-.24-3.79 1.22 1.24-3.67-.26-.38a10.58 10.58 0 0 1-1.65-5.66C5.58 10.3 10.27 5.7 16 5.7c5.72 0 10.42 4.6 10.42 10.1 0 5.58-4.7 10.75-10.42 10.75zm5.71-7.97c-.31-.15-1.84-.9-2.12-1.01-.29-.1-.5-.15-.72.16-.21.31-.82 1.01-1 1.22-.18.2-.36.23-.67.08-.31-.15-1.3-.47-2.47-1.49-.91-.8-1.52-1.78-1.7-2.09-.18-.31-.02-.47.13-.62.14-.13.31-.34.46-.51.15-.18.21-.31.31-.51.1-.21.05-.39-.03-.54-.08-.15-.72-1.72-.98-2.36-.26-.62-.52-.54-.72-.55h-.62c-.21 0-.54.08-.83.39-.28.31-1.08 1.05-1.08 2.55s1.11 2.95 1.27 3.15c.15.21 2.17 3.26 5.24 4.57.73.31 1.29.49 1.73.63.73.23 1.39.2 1.91.12.58-.09 1.84-.74 2.1-1.46.26-.72.26-1.33.18-1.46-.08-.12-.29-.2-.6-.35z" />
-            </svg>
+          <a href="#" aria-label="Facebook"
+            class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
+            <img src="https://cdn.simpleicons.org/facebook/white" alt="Facebook" class="w-6 h-6" />
+          </a>
+          <a href="#" aria-label="YouTube"
+            class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
+            <img src="https://cdn.simpleicons.org/youtube/white" alt="YouTube" class="w-6 h-6" />
+          </a>
+          <a href="#" aria-label="Spotify"
+            class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
+            <img src="https://cdn.simpleicons.org/spotify/white" alt="Spotify" class="w-6 h-6" />
           </a>
         </div>
       </div>
     </div>
-
-  </section>
-
-  <!-- Marquee Section -->
-  <section class="marquee py-4 bg-dark border-t border-b border-muted">
-    <div id="marquee-inner" class="marquee-inner items-center">
-
-      <!-- DAW / productie -->
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/protools/d5d5d5" alt="Pro Tools logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/reasonstudios/d5d5d5" alt="Reason Studios logo" loading="lazy"
-          decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/apple/d5d5d5" alt="Apple logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/steinberg/d5d5d5" alt="Steinberg logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/audacity/d5d5d5" alt="Audacity logo" loading="lazy" decoding="async">
-      </span>
-
-      <!-- plugins / tools -->
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/sonos/d5d5d5" alt="Sonos logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/sennheiser/d5d5d5" alt="Sennheiser logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/dolby/d5d5d5" alt="Dolby logo" loading="lazy" decoding="async">
-      </span>
-
-      <!-- distributie / community -->
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/spotify/d5d5d5" alt="Spotify logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/soundcloud/d5d5d5" alt="SoundCloud logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/bandcamp/d5d5d5" alt="Bandcamp logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/youtube/d5d5d5" alt="YouTube logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/instagram/d5d5d5" alt="Instagram logo" loading="lazy" decoding="async">
-      </span>
-      <span class="marquee-brand">
-        <img src="https://cdn.simpleicons.org/tiktok/d5d5d5" alt="TikTok logo" loading="lazy" decoding="async">
-      </span>
-    </div>
-  </section>
-
-  <!-- Founder Story Section -->
-  <section id="founder" class="relative py-12 md:py-16 px-6 md:px-12 bg-dark">
-    <!-- Sticky vertical gradient band -->
-    <div
-      class="pointer-events-none founder-gradient-band absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-full">
-    </div>
-    <div class="max-w-6xl flex flex-col sm:flex-row gap-12 items-center">
-      <!-- Left: story -->
-      <div class="space-y-6 reveal">
-        <div class="flex flex-row gap-1 items-center">
-          <span class="text-accent2 rotate-45">
-            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
-              <path d="M0 0h240v240H0zM240 240h240v240H240z" fill="currentColor"></path>
-            </svg>
-          </span>
-          <h2 class="text-4xl font-display uppercase text-accent text-left z-10">Verhaal achter de studio</h2>
-        </div>
-        <p>Als artiest heb ik jarenlang in studio’s gestaan waar de sfeer mijn creativiteit in de weg zat. Kloksessies
-          die je
-          opjagen, engineers die je in een standaard sound duwen en ruimtes waar je vooral “snel iets moet afmaken”.
-          Je komt binnen met een idee, maar gaat naar buiten met iets dat niet meer echt van jou voelt.</p>
-        <p>Die frustratie werd de reden dat ik StudioIEKS heb gebouwd. Een plek waar je tijd krijgt om te zoeken, waar
-          jouw stijl leidend is en waar ik als artiest met je meedenk vanuit ervaring, niet vanuit labeldruk. Hier
-          draait het om geluid, kwaliteit en een track waar je achter kan staan.</p>
-      </div>
-      <!-- Right: manifest block -->
-      <div class="relative w-full reveal">
-        <div id="manifest" class="manifest bg-dark/60 border-l-4 border-accent2 p-6 rounded-md w-max">
-          <p class="text-2xl font-display uppercase leading-snug">Artiesten verdienen vrijheid,<br>Geen "label" vibes.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Studio Tour Section -->
-  <section id="studio-tour" class="py-12 md:py-16 px-6 md:px-12 bg-dark">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-row gap-1 justify-end sm:justify-center items-center mb-8">
-        <span class="text-accent2 rotate-45 hidden sm:flex">
-          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
-            <path d="M0 0h240v240H0zM240 240h240v240H240z" fill="currentColor"></path>
-          </svg>
-        </span>
-        <h2 class="text-3xl md:text-4xl font-display uppercase text-accent text-center">Ontdek de setup
-        </h2>
-        <span class="text-accent2 rotate-45">
-          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
-            <path d="M0 0h240v240H0zM240 240h240v240H240z" fill="currentColor"></path>
-          </svg>
-        </span>
-      </div>
-      <p class="max-w-3xl mx-auto text-gray-400 text-end sm:text-center mb-10">
-        StudioIEKS is een complete studio. Professionele apparatuur, een vocal booth en een chille lounge. Alles
-        wat je nodig hebt om in flow op te nemen, schrijven en af te werken op een plek.
-      </p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card: Technische setup -->
-        <div class="group relative rounded-xl overflow-hidden bg-dark/50 border border-muted flex flex-col">
-          <img src="./assets/images/control-room.jpg" alt="Controlekamer van de studio"
-            class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105">
-          <div class="p-5 flex flex-col flex-1">
-            <h3 class="text-xl font-display uppercase text-accent mb-2">Technische set-up</h3>
-            <p class="text-gray-400 text-sm mb-4">Het hart van de studio: een strakke regie met de juiste monitors,
-              interface en workflow om snel jouw idee naar opname om te zetten.</p>
-            <a href="tel:+31600000000"
-              class="flex flex-row text-center items-center w-max gap-2 sm:text-start mt-auto inline-block px-4 py-2 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
-              Boek de studio</a>
+    <!-- Right column: biography and controls -->
+    <div class="w-full md:w-1/2 flex flex-col">
+      <div class="flex justify-between">
+        <h1 class="text-5xl font-bold mb-6">ST.van</h1>
+        <a href="#" class="btn btn-primary hover:opacity-80">
+          <div
+            class="py-3 px-8 uppercase text-sm tracking-wider bg-white text-black font-semibold transition-all duration-300 hover:px-10">
+            Book now
           </div>
-        </div>
-        <!-- Card: Vocal Booth -->
-        <div class="group relative rounded-xl overflow-hidden bg-dark/50 border border-muted flex flex-col">
-          <img src="./assets/images/vocal-booth.webp" alt="Vocal booth van de studio"
-            class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105">
-          <div class="p-5 flex flex-col flex-1">
-            <h3 class="text-xl font-display uppercase text-accent mb-2">Vocal booth</h3>
-            <p class="text-gray-400 text-sm mb-4">Aparte booth voor cleane vocal takes en focus. Droog, gecontroleerd
-              geluid met ruimte voor jouw performance.</p>
-            <a href="tel:+31600000000"
-              class="flex flex-row text-center items-center w-max gap-2 sm:text-start mt-auto inline-block px-4 py-2 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
-              Boek de studio</a>
-          </div>
-        </div>
-        <!-- Card: Lounge -->
-        <div class="group relative rounded-xl overflow-hidden bg-dark/50 border border-muted flex flex-col">
-          <img src="./assets/images/lounge-room.jpeg" alt="Loungehoek van de studio"
-            class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105">
-          <div class="p-5 flex flex-col flex-1">
-            <h3 class="text-xl font-display uppercase text-accent mb-2">Lounge</h3>
-            <p class="text-gray-400 text-sm mb-4">Een relaxte lounge om te schrijven, luisteren en resetten
-              tussen takes. Perfect voor een creatief momentje of drankie tussendoor.</p>
-            <a href="tel:+31600000000"
-              class="flex flex-row text-center items-center w-max gap-2 sm:text-start mt-auto inline-block px-4 py-2 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
-              Boek de studio</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- USP Section -->
-  <section id="usps" class="py-12 md:py-16 px-4 sm:px-6 md:px-12 bg-dark">
-    <div class="max-w-6xl mx-auto text-center mb-8 md:mb-12">
-      <div class="flex flex-row gap-1 justify-center items-center mb-8">
-        <span class="text-accent2 rotate-45">
-          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
-            <path d="M0 0h240v240H0zM240 240h240v240H240z" fill="currentColor"></path>
-          </svg>
-        </span>
-        <h2 class="text-3xl sm:text-4xl font-display uppercase text-accent text-center">Waarom StudioIEKS?
-        </h2>
-        <span class="text-accent2 rotate-45">
-          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
-            <path d="M0 0h240v240H0zM240 240h240v240H240z" fill="currentColor"></path>
-          </svg>
-        </span>
-      </div>
-    </div>
-    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
-      <!-- USP 1 -->
-      <div
-        class="group border border-muted rounded-xl p-5 sm:p-6 flex h-full flex-col items-start bg-dark/40 hover:bg-dark/60 transition-all duration-300 reveal">
-        <div class="shape-circle w-10 h-10 sm:w-12 sm:h-12 mb-4 bg-gradient-to-br from-accent to-accent2"></div>
-        <h3 class="font-display uppercase text-lg sm:text-xl text-white mb-2">Creatieve vrijheid</h3>
-        <p class="text-sm text-gray-400">Werk op jouw manier zonder opgelegde regels.</p>
-      </div>
-      <!-- USP 2 -->
-      <div
-        class="group border border-muted rounded-xl p-5 sm:p-6 flex h-full flex-col items-end sm:items-start bg-dark/40 hover:bg-dark/60 transition-all duration-300 reveal">
-        <div class="shape-hex w-10 h-10 sm:w-12 sm:h-12 mb-4 bg-gradient-to-br from-accent to-accent2"></div>
-        <h3 class="font-display uppercase text-lg sm:text-xl text-white mb-2">Professionele akoestiek</h3>
-        <p class="text-sm text-gray-400">Gekalibreerde ruimte voor serieuze opnames.</p>
-      </div>
-      <!-- USP 3 -->
-      <div
-        class="group border border-muted rounded-xl p-5 sm:p-6 flex h-full flex-col items-start bg-dark/40 hover:bg-dark/60 transition-all duration-300 reveal">
-        <div class="shape-diamond w-10 h-10 sm:w-12 sm:h-12 mb-4 bg-gradient-to-br from-accent to-accent2"></div>
-        <h3 class="font-display uppercase text-lg sm:text-xl text-white mb-2">Analoge & Digitale gear</h3>
-        <p class="text-sm text-gray-400">Van warme buizen tot moderne plugins.</p>
-      </div>
-      <!-- USP 4 -->
-      <div
-        class="group border border-muted rounded-xl p-5 sm:p-6 flex h-full flex-col items-end sm:items-start bg-dark/40 hover:bg-dark/60 transition-all duration-300 reveal">
-        <div class="shape-triangle w-10 h-10 sm:w-12 sm:h-12 mb-4 bg-gradient-to-br from-accent to-accent2"></div>
-        <h3 class="font-display uppercase text-lg sm:text-xl text-white mb-2">Flexibele sessies</h3>
-        <p class="text-sm text-gray-400">Boek alleen wat je nodig hebt, wanneer je wilt.</p>
-      </div>
-      <!-- USP 5 -->
-      <div
-        class="group border border-muted rounded-xl p-5 sm:p-6 flex h-full flex-col items-start bg-dark/40 hover:bg-dark/60 transition-all duration-300 reveal">
-        <div class="shape-square-rot w-10 h-10 sm:w-12 sm:h-12 mb-4 bg-gradient-to-br from-accent to-accent2"></div>
-        <h3 class="font-display uppercase text-lg sm:text-xl text-white mb-2">Artist‑owned</h3>
-        <p class="text-sm text-gray-400">Studio gebouwd en gerund door artiesten voor artiesten.</p>
-      </div>
-    </div>
-    <!-- Additional call‑to‑action -->
-    <div class="mt-10 text-center">
-      <a href="tel:+31600000000" target="_blank" rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 px-5 py-3 border border-accent rounded-[2px] text-accent text-sm sm:text-base font-semibold hover:bg-accent hover:text-dark transition-colors">
-        Neem contact op
-      </a>
-    </div>
-  </section>
-
-  <!-- Gear & Setup Section -->
-  <section id="gear"
-    class="relative py-12 md:py-16 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-dark via-dark/90 to-[#0c1217]">
-    <div class="max-w-6xl mx-auto space-y-8 md:space-y-10">
-      <div class="max-w-3xl space-y-4 reveal">
-        <p class="text-xs sm:text-sm uppercase tracking-[0.2em] text-accent">Gear & Setup</p>
-        <h2 class="text-4xl sm:text-5xl font-display uppercase text-white leading-none">High-end uitrusting.</h2>
-        <p class="text-gray-400 text-sm sm:text-base">Alles staat klaar voor snelle workflow, strakke opname en een mix
-          die meteen serieus klinkt.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-        <article class="border border-muted/80 rounded-xl bg-dark/50 p-5 sm:p-6 space-y-4 reveal">
-          <h3 class="font-display uppercase text-2xl text-accent">Recording</h3>
-          <ul class="space-y-3 text-sm sm:text-base">
-            <li class="gear-item flex items-start justify-between gap-3 pb-3 border-b border-muted/70">
-              <span class="text-gray-100">Neumann U87</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Vocals</span>
-            </li>
-            <li class="gear-item flex items-start justify-between gap-3 pb-3 border-b border-muted/70">
-              <span class="text-gray-100">Shure SM7B</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Rap / Punch</span>
-            </li>
-            <li class="gear-item flex items-start justify-between gap-3">
-              <span class="text-gray-100">UAD Apollo x8p</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Interface</span>
-            </li>
-          </ul>
-        </article>
-
-        <article class="border border-muted/80 rounded-xl bg-dark/50 p-5 sm:p-6 space-y-4 reveal">
-          <h3 class="font-display uppercase text-2xl text-end sm:text-start text-accent2">Monitoring</h3>
-          <ul class="space-y-3 text-sm sm:text-base">
-            <li
-              class="gear-item flex flex-row-reverse sm:flex-row items-start justify-between gap-3 pb-3 border-b border-muted/70">
-              <span class="text-gray-100">Genelec 8040</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Reference</span>
-            </li>
-            <li
-              class="gear-item flex flex-row-reverse sm:flex-row items-start justify-between gap-3 pb-3 border-b border-muted/70">
-              <span class="text-gray-100">Acoustic treatment</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Control room</span>
-            </li>
-            <li class="gear-item flex flex-row-reverse sm:flex-row items-start justify-between gap-3">
-              <span class="text-gray-100">Headphone cue system</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Tracking</span>
-            </li>
-          </ul>
-        </article>
-
-        <article class="border border-muted/80 rounded-xl bg-dark/50 p-5 sm:p-6 space-y-4 reveal">
-          <h3 class="font-display uppercase text-2xl text-accent">Instruments</h3>
-          <ul class="space-y-3 text-sm sm:text-base">
-            <li class="gear-item flex items-start justify-between gap-3 pb-3 border-b border-muted/70">
-              <span class="text-gray-100">Juno-106</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Vintage synth</span>
-            </li>
-            <li class="gear-item flex items-start justify-between gap-3 pb-3 border-b border-muted/70">
-              <span class="text-gray-100">Korg MS-20</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Analog bite</span>
-            </li>
-            <li class="gear-item flex items-start justify-between gap-3">
-              <span class="text-gray-100">TR-808 + SP-1200 style</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Rhythm</span>
-            </li>
-          </ul>
-        </article>
-
-        <article class="border border-muted/80 rounded-xl bg-dark/50 p-5 sm:p-6 space-y-4 reveal">
-          <h3 class="font-display uppercase text-2xl text-accent2 text-end sm:text-start">Workflow</h3>
-          <ul class="space-y-3 text-sm sm:text-base">
-            <li
-              class="gear-item flex flex-row-reverse sm:flex-row items-start justify-between gap-3 pb-3 border-b border-muted/70">
-              <span class="text-gray-100">Logic Pro</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Songwriting</span>
-            </li>
-            <li
-              class="gear-item flex flex-row-reverse sm:flex-row items-start justify-between gap-3 pb-3 border-b border-muted/70">
-              <span class="text-gray-100">Ableton Live</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Production</span>
-            </li>
-            <li class="gear-item flex flex-row-reverse sm:flex-row items-start justify-between gap-3">
-              <span class="text-gray-100">Pro Tools + UAD plugins</span>
-              <span class="text-xs uppercase tracking-wider text-gray-500">Mix / print</span>
-            </li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Studio Beelden Section -->
-  <section id="studio-vibes" class="py-12 md:py-16 px-4 sm:px-6 md:px-12 bg-dark">
-    <div class="max-w-6xl mx-auto space-y-8 md:space-y-10">
-      <div class="max-w-3xl space-y-4 reveal">
-        <p class="text-xs sm:text-sm uppercase tracking-[0.2em] text-accent2">Studio Beelden</p>
-        <h2 class="text-4xl sm:text-5xl font-display uppercase text-white leading-none">Reels en beelden voor studio
-          impressies.
-        </h2>
-        <p class="text-gray-400 text-sm sm:text-base">Bekijk behind-the-scenes beelden uit sessies in de studio. Proef
-          de vibes, workflow en sound van de ruimte.</p>
-      </div>
-
-      <div class="studio-vibes-grid grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <article class="media-tile reel-card group min-w-0 rounded-xl bg-dark/50 overflow-hidden reveal"
-          title="Reel: Vocale sessie in StudioIEKS">
-          <div class="relative aspect-[9/16] bg-black">
-            <img src="./assets/images/reel-cover-1.jpg" alt="Coverbeeld van reel: vocale sessie in StudioIEKS"
-              class="w-full h-full object-cover" loading="lazy"
-              onerror="this.style.display='none'; this.parentElement.classList.add('media-placeholder');">
-            <span
-              class="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-black/55 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
-              Check video
-            </span>
-            <span
-              class="absolute top-3 right-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/45"
-              aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="h-4 w-4 text-white">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-            <div
-              class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black/80 pointer-events-none">
-            </div>
-            <div class="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 p-3">
-              <div class="flex min-w-0 items-center gap-2">
-                <img src="./assets/images/studioieks-profile.jpg" alt="Profielicoon van StudioIEKS op Instagram"
-                  class="h-8 w-8 rounded-full object-cover ring-1 ring-white/40" loading="lazy"
-                  onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=&quot;inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-xs font-semibold text-white ring-1 ring-white/40&quot;>SI</span>');">
-                <div class="min-w-0">
-                  <p class="truncate text-xs font-semibold text-white">studioieks</p>
-                  <p class="text-[11px] text-gray-300">15 jan 2026</p>
-                </div>
-              </div>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="h-5 w-5 shrink-0 text-white" aria-hidden="true">
-                <path
-                  d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm11.5 1.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-              </svg>
-            </div>
-            <a href="https://www.instagram.com/reel/DQcTwQCDJZ2/" target="_blank" rel="noopener noreferrer"
-              class="absolute inset-0 z-20" aria-label="Open reel: vocale sessie in StudioIEKS"></a>
-          </div>
-        </article>
-
-        <article class="media-tile reel-card group min-w-0 rounded-xl bg-dark/50 overflow-hidden reveal"
-          title="Reel: Behind-the-scenes in StudioIEKS">
-          <div class="relative aspect-[9/16] bg-black">
-            <img src="./assets/images/reel-cover-2.jpg" alt="Coverbeeld van reel: behind-the-scenes in StudioIEKS"
-              class="w-full h-full object-cover" loading="lazy"
-              onerror="this.style.display='none'; this.parentElement.classList.add('media-placeholder');">
-            <span
-              class="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-black/55 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
-              Check video
-            </span>
-            <span
-              class="absolute top-3 right-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/45"
-              aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="h-4 w-4 text-white">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-            <div
-              class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black/80 pointer-events-none">
-            </div>
-            <div class="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 p-3">
-              <div class="flex min-w-0 items-center gap-2">
-                <img src="./assets/images/studioieks-profile.jpg" alt="Profielicoon van StudioIEKS op Instagram"
-                  class="h-8 w-8 rounded-full object-cover ring-1 ring-white/40" loading="lazy"
-                  onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=&quot;inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-xs font-semibold text-white ring-1 ring-white/40&quot;>SI</span>');">
-                <div class="min-w-0">
-                  <p class="truncate text-xs font-semibold text-white">studioieks</p>
-                  <p class="text-[11px] text-gray-300">03 feb 2026</p>
-                </div>
-              </div>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="h-5 w-5 shrink-0 text-white" aria-hidden="true">
-                <path
-                  d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm11.5 1.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-              </svg>
-            </div>
-            <a href="https://www.instagram.com/reel/DToGQ1nDFgT/" target="_blank" rel="noopener noreferrer"
-              class="absolute inset-0 z-20" aria-label="Open reel: behind-the-scenes in StudioIEKS"></a>
-          </div>
-        </article>
-
-        <article class="media-tile photo-card group border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal"
-          title="Foto: Booth sfeer in StudioIEKS">
-          <div class="relative aspect-[9/16] bg-gradient-to-br from-accent/15 via-dark to-accent2/15">
-            <img src="./assets/images/studio-shot-1.jpg"
-              alt="Vocal booth met microfoon en sfeerverlichting in StudioIEKS" title="Booth sfeer"
-              class="w-full h-full object-cover" loading="lazy"
-              onerror="this.style.display='none'; this.parentElement.classList.add('media-placeholder');">
-            <span
-              class="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-black/55 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
-              Studio foto
-            </span>
-            <span
-              class="absolute top-3 right-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/45"
-              aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="h-5 w-5 shrink-0 text-white" aria-hidden="true">
-                <path
-                  d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm11.5 1.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-              </svg>
-            </span>
-            <div
-              class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black/80 pointer-events-none">
-            </div>
-            <div class="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 p-3">
-              <div class="flex min-w-0 items-center gap-2">
-                <img src="./assets/images/studioieks-profile.jpg" alt="Profielicoon van StudioIEKS op Instagram"
-                  class="h-8 w-8 rounded-full object-cover ring-1 ring-white/40" loading="lazy"
-                  onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=&quot;inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-xs font-semibold text-white ring-1 ring-white/40&quot;>SI</span>');">
-                <div class="min-w-0">
-                  <p class="truncate text-xs font-semibold text-white">studioieks</p>
-                  <p class="text-[11px] text-gray-300">Booth sfeer</p>
-                </div>
-              </div>
-            </div>
-            <a href="https://instagram.com/studioieks" target="_blank" rel="noopener noreferrer"
-              class="absolute inset-0 z-20"></a>
-          </div>
-        </article>
-
-        <article class="media-tile photo-card group border border-muted/80 rounded-xl bg-dark/50 overflow-hidden reveal"
-          title="Foto: Producer desk in StudioIEKS">
-          <div class="relative aspect-[9/16] bg-gradient-to-br from-accent2/20 via-dark to-dark/80">
-            <img src="./assets/images/studio-shot-2.jpeg"
-              alt="Producer desk met audio-interface en monitoring in StudioIEKS" title="Desk detail"
-              class="w-full h-full object-cover" loading="lazy"
-              onerror="this.style.display='none'; this.parentElement.classList.add('media-placeholder');">
-            <span
-              class="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-black/55 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
-              Studio foto
-            </span>
-            <span
-              class="absolute top-3 right-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/45"
-              aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                class="h-5 w-5 shrink-0 text-white" aria-hidden="true">
-                <path
-                  d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm11.5 1.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-              </svg>
-            </span>
-            <div
-              class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-black/80 pointer-events-none">
-            </div>
-            <div class="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 p-3">
-              <div class="flex min-w-0 items-center gap-2">
-                <img src="./assets/images/studioieks-profile.jpg" alt="Profielicoon van StudioIEKS op Instagram"
-                  class="h-8 w-8 rounded-full object-cover ring-1 ring-white/40" loading="lazy"
-                  onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=&quot;inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-xs font-semibold text-white ring-1 ring-white/40&quot;>SI</span>');">
-                <div class="min-w-0">
-                  <p class="truncate text-xs font-semibold text-white">studioieks</p>
-                  <p class="text-[11px] text-gray-300">Desk detail</p>
-                </div>
-              </div>
-            </div>
-            <a href="https://instagram.com/studioieks" target="_blank" rel="noopener noreferrer"
-              class="absolute inset-0 z-20"></a>
-          </div>
-        </article>
-      </div>
-
-      <div class="reveal">
-        <a href="https://instagram.com/studioieks" target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-5 py-3 border border-accent rounded-[2px] text-accent text-sm sm:text-base font-semibold hover:bg-accent hover:text-dark transition-colors">
-          Bekijk meer op Instagram
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-            <path d="M13 5l7 7-7 7-1.41-1.41L16.17 13H4v-2h12.17l-4.58-4.59L13 5z" />
-          </svg>
         </a>
       </div>
-    </div>
-  </section>
-
-  <!-- Press Kit & Socials Section -->
-  <section id="presskit" class="py-12 md:py-16 px-6 md:px-12 bg-dark">
-    <div class="max-w-6xl mx-auto md:grid md:grid-cols-2 space-y-12 md:space-y-0 gap-12">
-
-      <!-- Social & contact card -->
-      <div class="bg-dark/50 border border-muted rounded-xl p-8 reveal">
-        <h2 class="text-4xl font-display uppercase text-accent mb-4">Volg StudioIEKS</h2>
-        <p class="text-gray-400 mb-6">Blijf op de hoogte van releases en vibes.</p>
-        <div class="flex flex-wrap gap-3 justify-start mb-6">
-          <a href="https://instagram.com/studioieks" target="_blank" rel="noopener noreferrer"
-            class="flex flex-row text-center items-center w-max gap-2 sm:text-start mt-auto inline-block px-4 py-2 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
-            <img class="w-4 h-4" src="https://cdn.simpleicons.org/instagram/00ffa3" alt="Instagram logo" loading="lazy"
-              decoding="async">
-            Instagram
-          </a>
-          <a href="https://tiktok.com/studioieks" target="_blank" rel="noopener noreferrer"
-            class="flex flex-row text-center items-center w-max gap-2 sm:text-start mt-auto inline-block px-4 py-2 border border-accent rounded-[2px] text-accent font-semibold hover:bg-accent hover:text-dark transition-colors">
-            <img class="w-4 h-4" src="https://cdn.simpleicons.org/tiktok/00ffa3" alt="Instagram logo" loading="lazy"
-              decoding="async">
-            TikTok
-          </a>
-        </div>
-        <div class="text-gray-400 text-sm flex flex-col gap-1">
-          <a href="mailto:info@studioieks.com"><strong>Mail:</strong> info@studioieks.com</a>
-          <a href="https://instagram.com/studioieks" target="_blank" rel="noopener noreferrer"><strong>DM:</strong>
-            @studioieks</a>
-        </div>
+      <p id="bioExcerpt" class="mb-4">
+        ST.VAN is misschien wel één van de meest frisse en energieke Afro/Latin artists uit Nederland. Half
+        Ecuadoriaans, half Nederlands-geboren in Amsterdam en grootgebracht in Zaandam 020X075. Twee steden, één
+        sound. ST.VAN draagt ze allebei met trots op z’n rug en neemt die vibe overal mee naartoe.
+      </p>
+      <div id="bioMore" class="hidden mb-4">
+        <p class="mb-4">
+          “Ik draag Zaandam en Amsterdam met trots op m’n rug. Overal waar ik kom, je hoort het in de muziek.”
+        </p>
+        <p class="mb-4">
+          Wie ST.VAN checkt, weet wat je krijgt. Clubvibes, domme dansies, goeie energie en fresh afrobeat sounds die je
+          niet rustig laten staan. Hij bouwt sets en tracks die voelen als een warme nacht met te veel champagne, te
+          veel beweging en precies genoeg brutale melodieën om het smerig lekker te maken. Dit is muziek voor mensen die
+          niet komen zitten—maar komen springen.
+        </p>
+        <p>
+          Laat je niet misleiden door de losse houding en de party talk. Achter die fun zit iemand die z’n identiteit,
+          roots en stad in elke track stopt en precies weet hoe je een room laat draaien. ST.VAN is geen
+          achtergrondmuziek—ST.VAN is het moment. Disclaimer: kom ‘m checken als je die vunzige deuntjes loeft en zin
+          hebt in een avond champagne popping & domme dansies.
+        </p>
       </div>
-
-      <!-- Press kit download card -->
-      <div class="bg-dark/50 border border-muted rounded-xl p-8 flex flex-col gap-6 reveal">
-        <div class="space-y-4">
-          <h2 class="text-4xl font-display uppercase text-accent">Press & Media</h2>
-          <p class="text-gray-400">Op zoek naar een presskit, samenvatting van StudioIEKS met
-            specs/<wbr>verhaal/<wbr>contactinformatie of
-            een overzicht van al onze refenties?
-          </p>
-          <p class="text-gray-400">
-            Bekijk onze press & media pagina.
-          </p>
-        </div>
-        <!-- Additional call‑to‑action -->
-        <div class="reveal">
-          <a href="./press" rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-5 py-3 border border-accent rounded-[2px] text-accent text-sm sm:text-base font-semibold hover:bg-accent hover:text-dark transition-colors">
-            Bekijk Press & Media
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-              <path d="M13 5l7 7-7 7-1.41-1.41L16.17 13H4v-2h12.17l-4.58-4.59L13 5z" />
-            </svg>
-          </a>
-        </div>
+      <button id="toggleMore"
+        class="w-max px-6 py-3 mb-6 border-b-[1px] border-rose-500 text-sm uppercase tracking-wide text-white font-medium self-start hover:text-gray-300">
+        Lees meer
+      </button>
+      <!-- Social icons row -->
+      <div class="flex items-center gap-4 mb-10">
+        <a href="https://www.instagram.com/studioieks/" target="_blank" class="social-icon"><i
+            class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/studioieks/" target="_blank" class="social-icon"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://www.youtube.com/" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+        <a href="https://open.spotify.com/artist/4udVTEt1fdLiDL9lQuHX2u" target="_blank" class="social-icon"><i
+            class="fab fa-spotify"></i></a>
+      </div>
+      <!-- Spotify embed -->
+      <div class="overflow-hidden rounded-lg mb-10">
+        <iframe src="https://open.spotify.com/embed/artist/4udVTEt1fdLiDL9lQuHX2u" width="100%" height="400"
+          frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen
+          loading="lazy"></iframe>
+      </div>
+      <!-- YouTube embed -->
+      <div class="overflow-hidden rounded-lg bg-white/50 w-full rounded-lg overflow-hidden" style="padding-top: 56.25%; position: relative;">
+        <iframe src="https://www.youtube.com/embed/6TP1lIe-ZLk" title="YouTube video" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+          loading="lazy"></iframe>
       </div>
     </div>
   </section>
 
-  <footer class="py-12 text-center text-gray-600 text-sm bg-dark border-t border-muted">
-    <p>326 Oostzijde, Zaandam, Noord-Holland</p>
-    <p class="mt-2">© 2026 StudioIEKS. Alle rechten voorbehouden.</p>
+  <!-- Footer -->
+  <footer class="container mx-auto px-4 py-8 border-t border-gray-700">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm">
+      <!-- Contact information -->
+      <div class="flex flex-col space-y-2">
+        <div class="flex items-center space-x-2">
+          <span>Info@studioieks.com</span>
+          <i class="fas fa-copy cursor-pointer text-xs opacity-60 hover:opacity-100"
+            onclick="copyToClipboard('Info@studioieks.com')" title="Copy email to clipboard"></i>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span>+31 (070) 3998279</span>
+          <i class="fas fa-copy cursor-pointer text-xs opacity-60 hover:opacity-100"
+            onclick="copyToClipboard('+31 (070) 3998279')" title="Copy phone number"></i>
+        </div>
+        <span class="opacity-50">Oostzijde 76, 1502 BJ Zaandam Nederland</span>
+      </div>
+      <!-- Social icons again -->
+      <div class="flex items-center gap-4">
+        <a href="https://www.instagram.com/studioieks/" target="_blank" class="social-icon"><i
+            class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/studioieks/" target="_blank" class="social-icon"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://www.linkedin.com/company/studioieks" target="_blank" class="social-icon"><i
+            class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="mt-6 flex flex-col md:flex-row items-center justify-between text-xs space-y-2 md:space-y-0">
+      <span>© <span id="currentYear"></span> Studio Ieks. All Rights Reserved</span>
+      <div class="flex items-center space-x-4">
+        <a href="https://cdn.prod.website-files.com/67615e8f41f98e91d0261d31" class="footer-link" target="_blank">Terms
+          &amp; Conditions</a>
+        <a href="https://fouronline.nl" class="footer-link" target="_blank">Website door <span class="inline-flex text-white/70">Van Dorst</span></a>
+      </div>
+    </div>
   </footer>
 
-  <script src="./js/main.js"></script>
+  <!-- JavaScript for toggling biography and copying text -->
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    const toggleButton = document.getElementById('toggleMore');
+    const bioMore = document.getElementById('bioMore');
+    let expanded = false;
+    toggleButton.addEventListener('click', () => {
+      expanded = !expanded;
+      bioMore.classList.toggle('hidden', !expanded);
+      toggleButton.textContent = expanded ? 'Read less' : 'Read more';
+    });
+
+    function copyToClipboard(text) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          alert('Copied to clipboard');
+        })
+        .catch((err) => {
+          console.error('Failed to copy: ', err);
+        });
+    }
+  </script>
 </body>
 
 </html>
