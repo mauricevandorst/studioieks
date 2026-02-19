@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Artist | ST.Van</title>
+  <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.ico">
   <!-- Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
@@ -68,6 +69,20 @@
     .footer-link {
       @apply hover:text-gray-300 underline underline-offset-2;
     }
+
+    .bio-more {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: max-height 420ms ease, opacity 280ms ease, transform 320ms ease;
+      will-change: max-height, opacity, transform;
+    }
+
+    .bio-more.is-open {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 
@@ -77,8 +92,8 @@
     <!-- Logo -->
     <div class="flex items-center space-x-3">
       <!-- Replace with downloaded logo if available -->
-      <a href="#" class="hover:opacity-80">
-        <img src="assets/images/logo.jpg" alt="StudioIEKS logo" class="h-32 w-auto" />
+      <a href="#" class="transition-all duration-150 hover:opacity-80">
+        <img src="./assets/images/logo.jpg" alt="StudioIEKS logo" class="h-32 w-auto" />
       </a>
     </div>
   </header>
@@ -87,26 +102,27 @@
   <section class="container mx-auto px-4 pb-10 pt-5 lg:pt-10 flex flex-col md:flex-row items-start gap-12">
     <!-- Left column: portrait -->
     <div class="relative w-full md:w-1/2 flex flex-col justify-center md:sticky md:top-8 md:self-start">
-      <div class="relative flex justify-end items-end rounded-xl shadow-lg overflow-hidden">
-        <img src="assets/images/portrait.png" alt="Artist portrait" class="object-cover w-full object-fit" />
+      <div class="relative flex justify-end items-end rounded-xl shadow-lg overflow-hidden mx-4">
+        <img src="./assets/images/portrait.png" alt="Artist portrait" class="object-cover w-full object-fit" />
 
         <!-- Signature overlay (placed at bottom right) -->
         <div class="absolute max-w-xs opacity-80">
           <!-- Use image or text-based signature -->
-          <img src="assets/images/signature.avif" alt="Signature" class="w-24 sm:w-28 md:w-36 h-auto mix-blend-screen" />
+          <img src="./assets/images/signature.avif" alt="Signature"
+            class="w-24 sm:w-28 md:w-36 h-auto mix-blend-screen" />
         </div>
       </div>
 
       <!-- CTA buttons -->
       <div class="flex flex-col items-start gap-2">
         <div class="w-full flex flex-wrap items-center gap-2 mt-6">
-          <a href="#" class="w-full lg:w-max btn btn-primary hover:opacity-80">
+          <a href="#" class="w-full lg:w-max btn btn-primary transition-all duration-150 hover:opacity-80">
             <div
               class="w-full py-3 px-8 uppercase text-sm tracking-wider bg-white text-center text-black font-semibold transition-all duration-300 hover:px-10">
               Book now
             </div>
           </a>
-          <a href="#" class="w-full lg:w-max btn btn-primary hover:opacity-80">
+          <a href="#" class="w-full lg:w-max btn btn-primary transition-all duration-150 hover:opacity-80">
             <div
               class="w-full py-3 px-8 uppercase text-sm tracking-wider text-center text-white border-[1px] border-white/30 font-semibold transition-all duration-300 hover:px-10">
               Download Presskit
@@ -137,7 +153,7 @@
     <div class="w-full md:w-1/2 flex flex-col">
       <div class="flex justify-between">
         <h1 class="text-5xl font-bold mb-6">ST.van</h1>
-        <a href="#" class="btn btn-primary hover:opacity-80">
+        <a href="#" class="hidden md:flex btn btn-primary hover:opacity-80">
           <div
             class="py-3 px-8 uppercase text-sm tracking-wider bg-white text-black font-semibold transition-all duration-300 hover:px-10">
             Book now
@@ -149,7 +165,7 @@
         Ecuadoriaans, half Nederlands-geboren in Amsterdam en grootgebracht in Zaandam 020X075. Twee steden, één
         sound. ST.VAN draagt ze allebei met trots op z’n rug en neemt die vibe overal mee naartoe.
       </p>
-      <div id="bioMore" class="hidden mb-4">
+      <div id="bioMore" class="bio-more mb-4" aria-hidden="true">
         <p class="mb-4">
           “Ik draag Zaandam en Amsterdam met trots op m’n rug. Overal waar ik kom, je hoort het in de muziek.”
         </p>
@@ -167,7 +183,7 @@
         </p>
       </div>
       <button id="toggleMore"
-        class="w-max px-6 py-3 mb-6 border-b-[1px] border-rose-500 text-sm uppercase tracking-wide text-white font-medium self-start hover:text-gray-300">
+        class="w-max px-6 py-3 mb-6 border-b-[1px] border-rose-500 text-sm uppercase tracking-wide text-white font-medium self-start transition-all duration-150 hover:opacity-80">
         Lees meer
       </button>
       <!-- Social icons row -->
@@ -187,7 +203,8 @@
           loading="lazy"></iframe>
       </div>
       <!-- YouTube embed -->
-      <div class="overflow-hidden rounded-lg bg-white/50 w-full rounded-lg overflow-hidden" style="padding-top: 56.25%; position: relative;">
+      <div class="overflow-hidden rounded-lg bg-white/50 w-full rounded-lg overflow-hidden"
+        style="padding-top: 56.25%; position: relative;">
         <iframe src="https://www.youtube.com/embed/6TP1lIe-ZLk" title="YouTube video" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
@@ -203,13 +220,15 @@
       <div class="flex flex-col space-y-2">
         <div class="flex items-center space-x-2">
           <span>Info@studioieks.com</span>
-          <i class="fas fa-copy cursor-pointer text-xs opacity-60 hover:opacity-100"
-            onclick="copyToClipboard('Info@studioieks.com')" title="Copy email to clipboard"></i>
+          <img src="https://api.iconify.design/bi/copy.svg?color=%23fff" alt="Copy email"
+            class="w-3 h-3 cursor-pointer opacity-60 hover:opacity-100" onclick="copyToClipboard('Info@studioieks.com')"
+            title="Copy email to clipboard" loading="lazy" />
         </div>
         <div class="flex items-center space-x-2">
           <span>+31 (070) 3998279</span>
-          <i class="fas fa-copy cursor-pointer text-xs opacity-60 hover:opacity-100"
-            onclick="copyToClipboard('+31 (070) 3998279')" title="Copy phone number"></i>
+          <img src="https://api.iconify.design/bi/copy.svg?color=%23fff" alt="Copy email"
+            class="w-3 h-3 cursor-pointer opacity-60 hover:opacity-100" onclick="copyToClipboard('Info@studioieks.com')"
+            title="Copy email to clipboard" loading="lazy" />
         </div>
         <span class="opacity-50">Oostzijde 76, 1502 BJ Zaandam Nederland</span>
       </div>
@@ -228,7 +247,8 @@
       <div class="flex items-center space-x-4">
         <a href="https://cdn.prod.website-files.com/67615e8f41f98e91d0261d31" class="footer-link" target="_blank">Terms
           &amp; Conditions</a>
-        <a href="https://fouronline.nl" class="footer-link" target="_blank">Website door <span class="inline-flex text-white/70">Van Dorst</span></a>
+        <a href="https://fouronline.nl" class="footer-link" target="_blank">Website by <span
+            class="inline-flex text-white/70">van Dorst</span></a>
       </div>
     </div>
   </footer>
@@ -240,10 +260,33 @@
     const toggleButton = document.getElementById('toggleMore');
     const bioMore = document.getElementById('bioMore');
     let expanded = false;
+
+    function setExpandedState(isExpanded) {
+      if (isExpanded) {
+        bioMore.classList.add('is-open');
+        bioMore.setAttribute('aria-hidden', 'false');
+        bioMore.style.maxHeight = `${bioMore.scrollHeight}px`;
+        return;
+      }
+
+      bioMore.style.maxHeight = `${bioMore.scrollHeight}px`;
+      // Force reflow so the collapse transition always starts from the current height.
+      bioMore.offsetHeight;
+      bioMore.classList.remove('is-open');
+      bioMore.setAttribute('aria-hidden', 'true');
+      bioMore.style.maxHeight = '0px';
+    }
+
     toggleButton.addEventListener('click', () => {
       expanded = !expanded;
-      bioMore.classList.toggle('hidden', !expanded);
-      toggleButton.textContent = expanded ? 'Read less' : 'Read more';
+      setExpandedState(expanded);
+      toggleButton.textContent = expanded ? 'Lees minder' : 'Lees meer';
+    });
+
+    window.addEventListener('resize', () => {
+      if (expanded) {
+        bioMore.style.maxHeight = `${bioMore.scrollHeight}px`;
+      }
     });
 
     function copyToClipboard(text) {
