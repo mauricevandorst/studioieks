@@ -82,8 +82,8 @@
     }
 
     .portrait-frame {
-      animation: portrait-enter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both,
-        portrait-float-grow 3.2s ease-in-out 1.25s infinite;
+      animation: portrait-enter 1.45s cubic-bezier(0.16, 1, 0.3, 1) both,
+        portrait-float-grow 3.2s ease-in-out 1.45s infinite;
       transform-origin: center top;
       overflow: visible;
       will-change: transform;
@@ -113,7 +113,7 @@
 
     .signature-overlay {
       z-index: 2;
-      animation: signature-enter 1.5s ease-out both;
+      animation: signature-enter 1.5s ease-out 0.5s both;
       will-change: transform, opacity;
     }
 
@@ -220,15 +220,21 @@
 
     @keyframes portrait-enter {
       0% {
-        transform: translateY(48px) scale(0.985);
+        transform: translateY(92px) scale(0.92) rotate(-4deg);
         opacity: 0;
-        filter: blur(1.5px);
+        filter: blur(8px) brightness(0.65);
+      }
+
+      62% {
+        transform: translateY(-8px) scale(1.03) rotate(0.8deg);
+        opacity: 1;
+        filter: blur(0) brightness(1.08);
       }
 
       100% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1) rotate(0deg);
         opacity: 1;
-        filter: blur(0);
+        filter: blur(0) brightness(1);
       }
     }
 
@@ -311,7 +317,7 @@
       <div class="flex flex-col gap-8">
         <!-- Portrait with signature overlay -->
         <div class="relative flex flex-col justify-center items-center">
-          <div class="portrait-frame relative flex justify-end items-end shadow-lg mx-4 sm:mx-0">
+          <div class="portrait-frame relative flex justify-end items-end shadow-lg mx-8 sm:mx-0">
             <div class="portrait-media">
               <img src="./assets/images/portrait.png" alt="Artist portrait"
                 class="max-w-[350px] sm:max-w-[450px] object-cover object-top w-full" />
