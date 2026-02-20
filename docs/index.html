@@ -85,15 +85,21 @@
       animation: portrait-enter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both,
         portrait-float-grow 3.2s ease-in-out 1.25s infinite;
       transform-origin: center top;
-      overflow: hidden;
+      overflow: visible;
       will-change: transform;
+    }
+
+    .portrait-media {
+      overflow: hidden;
+      border-radius: 0.75rem;
     }
 
     .portrait-frame::after {
       content: "";
       position: absolute;
-      inset: -40% -10% auto -10%;
+      inset: -20% -0% auto -0%;
       height: 80%;
+      z-index: 1;
       background: linear-gradient(180deg,
           rgba(255, 255, 255, 0) 0%,
           rgba(255, 255, 255, 0.2) 45%,
@@ -106,8 +112,106 @@
     }
 
     .signature-overlay {
-      animation: signature-enter 1.5s ease-out 0.55s both;
+      z-index: 2;
+      animation: signature-enter 1.5s ease-out both;
       will-change: transform, opacity;
+    }
+
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(26px) scale(0.985);
+      transition: opacity 620ms ease, transform 680ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+
+    .reveal-item.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .embed-reveal {
+      transform: translateY(30px) scale(0.98);
+    }
+
+    .embed-reveal.is-visible {
+      transform: translateY(0) scale(1);
+    }
+
+    .footer-reveal {
+      transform: translateY(34px);
+    }
+
+    .footer-reveal.is-visible {
+      transform: translateY(0);
+    }
+
+    .contact-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 280ms ease, visibility 280ms ease;
+    }
+
+    .contact-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .contact-panel {
+      width: min(100%, 560px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(175, 40, 40, 0.2), transparent 52%),
+        radial-gradient(circle at 100% 100%, rgba(140, 140, 140, 0.2), transparent 45%),
+        #080808;
+      border-radius: 18px;
+      padding: 1.25rem;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+      transform: translateY(20px) scale(0.98);
+      transition: transform 280ms ease;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
+    }
+
+    .contact-modal.is-open .contact-panel {
+      transform: translateY(0) scale(1);
+    }
+
+    .contact-input {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--white);
+      border-radius: 0.75rem;
+      padding: 0.75rem 0.875rem;
+      font-size: 0.95rem;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .contact-input:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .contact-input::placeholder {
+      color: rgba(255, 255, 255, 0.52);
+    }
+
+    .contact-note {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.72);
     }
 
     @keyframes portrait-enter {
@@ -168,8 +272,12 @@
 
       .portrait-frame,
       .portrait-frame::after,
-      .signature-overlay {
+      .signature-overlay,
+      .reveal-item {
         animation: none;
+        transition: none;
+        opacity: 1;
+        transform: none;
       }
     }
   </style>
@@ -190,57 +298,62 @@
   <!-- Hero section -->
   <section class="container mx-auto px-4 pb-10 flex flex-col md:flex-row items-start gap-12 md:gap-18 lg:gap-24">
     <!-- Left column: portrait -->
-    <div class="flex justify-center sm:pt-8 md:pt-20 items-center w-full z-[90] md:w-1/2 md:sticky md:top-8 md:self-start">
-      
+    <div
+      class="flex justify-center mt-4 md:mt-12 sm:pt-8 md:pt-20 items-center w-full z-[90] md:w-1/2 md:sticky md:top-8 md:self-start">
+
       <div class="flex flex-col gap-8">
-        <!-- Mobile title above portrait -->
-        <h1 class="block sm:hidden text-4xl font-semibold tracking-wide">ST.VAN</h1>
-  
         <!-- Portrait with signature overlay -->
-        <div class="relative max-w-[450px] flex flex-col justify-center md:sticky md:top-8 md:self-start">
+        <div class="relative flex flex-col justify-center items-center">
           <div class="portrait-frame relative flex justify-end items-end shadow-lg mx-4 sm:mx-0">
-            <img src="./assets/images/portrait.png" alt="Artist portrait"
-              class="rounded-xl object-cover object-top w-full" />
-  
+            <div class="portrait-media">
+              <img src="./assets/images/portrait.png" alt="Artist portrait"
+                class="max-w-[350px] sm:max-w-[450px] object-cover object-top w-full" />
+            </div>
+
             <!-- Signature overlay (placed at bottom right) -->
-            <div class="signature-overlay absolute max-w-xs opacity-80 bottom-[-35px] right-[-35px]">
+            <div class="signature-overlay absolute max-w-xs bottom-[-55px] right-[-35px]">
               <!-- Use image or text-based signature -->
               <img src="./assets/images/signature.avif" alt="Signature"
-                class="w-24 sm:w-28 md:w-36 h-auto mix-blend-screen" />
+                class="w-36 md:w-36 h-auto mix-blend-screen z-[91]" />
             </div>
           </div>
-      </div>
+        </div>
 
         <!-- CTA buttons -->
-        <div class="flex flex-col items-start gap-2">
+        <div class="flex flex-col items-start gap-2 reveal-item" data-reveal style="--reveal-delay: 120ms;">
           <div class="w-full flex flex-wrap items-center gap-2 mt-6">
-            <a href="#" class="w-full lg:w-max btn btn-primary transition-all duration-150 hover:opacity-80">
+            <a href="#"
+              class="w-full lg:w-max btn btn-primary transition-all duration-150 hover:opacity-80 reveal-item js-open-contact"
+              data-reveal style="--reveal-delay: 180ms;">
               <div
                 class="w-full py-3 px-8 uppercase text-sm tracking-wider bg-white text-center text-black font-semibold transition-all duration-300 hover:px-10">
                 Book now
               </div>
             </a>
-            <a href="#" class="w-full lg:w-max btn btn-primary transition-all duration-150 hover:opacity-80">
+            <a href="presskit.pdf"
+              class="w-full lg:w-max btn btn-primary transition-all duration-150 hover:opacity-80 reveal-item"
+              data-reveal style="--reveal-delay: 240ms;">
               <div
                 class="w-full py-3 px-8 uppercase text-sm tracking-wider text-center text-white border-[1px] border-white/30 font-semibold transition-all duration-300 hover:px-10">
                 Download Presskit
               </div>
             </a>
           </div>
-          <div class="flex items-center justify-center flex-wrap gap-4">
-            <a href="#" aria-label="Instagram"
+          <div class="flex items-center justify-center flex-wrap gap-4 reveal-item" data-reveal
+            style="--reveal-delay: 300ms;">
+            <a href="https://www.instagram.com/st.van444" aria-label="Instagram"
               class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
               <img src="https://cdn.simpleicons.org/instagram/white" alt="Instagram" class="w-6 h-6" />
             </a>
-            <a href="#" aria-label="Facebook"
+            <a href="https://www.facebook.com/st.van444" aria-label="Facebook"
               class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
               <img src="https://cdn.simpleicons.org/facebook/white" alt="Facebook" class="w-6 h-6" />
             </a>
-            <a href="#" aria-label="YouTube"
+            <a href="https://www.youtube.com/@StudioIEKS" aria-label="YouTube"
               class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
               <img src="https://cdn.simpleicons.org/youtube/white" alt="YouTube" class="w-6 h-6" />
             </a>
-            <a href="#" aria-label="Spotify"
+            <a href="https://open.spotify.com/artist/4udVTEt1fdLiDL9lQuHX2u" aria-label="Spotify"
               class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
               <img src="https://cdn.simpleicons.org/spotify/white" alt="Spotify" class="w-6 h-6" />
             </a>
@@ -250,60 +363,69 @@
     </div>
     <!-- Right column: biography and controls -->
     <div class="w-full flex flex-col md:w-1/2 md:mt-36">
-      <div class="flex justify-between">
-        <h1 class="text-3xl font-semibold tracking-wide mb-6">ST.VAN</h1>
-        <a href="#" class="hidden md:block btn btn-primary hover:opacity-80">
-          <div
-            class="py-3 px-8 uppercase text-sm tracking-wider bg-white text-black font-semibold transition-all duration-300 hover:px-10">
-            Book now
-          </div>
-        </a>
+      <div class="w-full flex flex-col gap-4">
+        <div class="flex justify-between">
+          <h1 class="text-4xl font-semibold tracking-wide mb-6 reveal-item" data-reveal style="--reveal-delay: 80ms;">
+            ST.van</h1>
+          <a href="#" class="hidden md:block btn btn-primary hover:opacity-80 reveal-item js-open-contact" data-reveal
+            style="--reveal-delay: 140ms;">
+            <div
+              class="py-3 px-8 uppercase text-sm tracking-wider bg-white text-black font-semibold transition-all duration-300 hover:px-10">
+              Book now
+            </div>
+          </a>
+        </div>
+        <p id="bioExcerpt" class="text-sm tracking-wide reveal-item" data-reveal style="--reveal-delay: 180ms;">
+          ST.van is de meest frisse en energieke Afro/Latin upcoming artist uit Nederland. Half
+          Ecuadoriaans, half Nederlands-geboren in Amsterdam en grootgebracht in Zaandam 020X075. Twee steden, één
+          sound. ST.van draagt ze allebei met trots op z’n rug en neemt die vibe overal mee naartoe.
+        </p>
+        <div id="bioMore" class="bio-more text-sm tracking-wide reveal-item" data-reveal style="--reveal-delay: 220ms;"
+          aria-hidden="true">
+          <p class="mb-4">
+            “Ik draag Zaandam en Amsterdam met trots op m’n rug. Overal waar ik kom, je hoort het in de muziek.”
+          </p>
+          <p class="mb-4">
+            Wie ST.van checkt, weet wat je krijgt. Clubvibes, domme dansies, goeie energie en fresh afrobeat sounds die
+            je
+            niet rustig laten staan. Hij bouwt sets en tracks die voelen als een warme nacht met te veel champagne, te
+            veel beweging en precies genoeg brutale melodieën om het smerig lekker te maken. Dit is muziek voor mensen
+            die
+            niet komen zitten, maar komen springen.
+          </p>
+          <p>
+            Laat je niet misleiden door de losse houding en de party talk. Achter die fun zit iemand die z’n identiteit,
+            roots en stad in elke track stopt en precies weet hoe je een room laat draaien. ST.van is geen
+            achtergrondmuziek, ST.van is het moment. Disclaimer: kom ‘m checken als je die vunzige deuntjes loeft en zin
+            hebt in een avond champagne popping & domme dansies.
+          </p>
+        </div>
+        <button id="toggleMore"
+          class="w-max px-6 py-3 border-b-[1px] border-[#a2671e] text-sm uppercase tracking-wide text-white font-medium self-start transition-all duration-150 hover:opacity-80 reveal-item"
+          data-reveal style="--reveal-delay: 260ms;">
+          Lees meer
+        </button>
       </div>
-      <p id="bioExcerpt" class="mb-4 text-sm tracking-wide">
-        ST.van is misschien wel de meest frisse en energieke Afro/Latin upcoming artist uit Nederland. Half
-        Ecuadoriaans, half Nederlands-geboren in Amsterdam en grootgebracht in Zaandam 020X075. Twee steden, één
-        sound. ST.van draagt ze allebei met trots op z’n rug en neemt die vibe overal mee naartoe.
-      </p>
-      <div id="bioMore" class="bio-more mb-4 text-sm tracking-wide" aria-hidden="true">
-        <p class="mb-4">
-          “Ik draag Zaandam en Amsterdam met trots op m’n rug. Overal waar ik kom, je hoort het in de muziek.”
-        </p>
-        <p class="mb-4">
-          Wie ST.van checkt, weet wat je krijgt. Clubvibes, domme dansies, goeie energie en fresh afrobeat sounds die je
-          niet rustig laten staan. Hij bouwt sets en tracks die voelen als een warme nacht met te veel champagne, te
-          veel beweging en precies genoeg brutale melodieën om het smerig lekker te maken. Dit is muziek voor mensen die
-          niet komen zitten, maar komen springen.
-        </p>
-        <p>
-          Laat je niet misleiden door de losse houding en de party talk. Achter die fun zit iemand die z’n identiteit,
-          roots en stad in elke track stopt en precies weet hoe je een room laat draaien. ST.van is geen
-          achtergrondmuziek, ST.van is het moment. Disclaimer: kom ‘m checken als je die vunzige deuntjes loeft en zin
-          hebt in een avond champagne popping & domme dansies.
-        </p>
-      </div>
-      <button id="toggleMore"
-        class="w-max px-6 py-3 mb-6 border-b-[1px] border-rose-500 text-sm uppercase tracking-wide text-white font-medium self-start transition-all duration-150 hover:opacity-80">
-        Lees meer
-      </button>
       <!-- Social icons row -->
-      <div class="flex items-center gap-4 mb-10">
-        <a href="https://www.instagram.com/studioieks/" target="_blank" class="social-icon"><i
-            class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/studioieks/" target="_blank" class="social-icon"><i
-            class="fab fa-facebook-f"></i></a>
-        <a href="https://www.youtube.com/" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
-        <a href="https://open.spotify.com/artist/4udVTEt1fdLiDL9lQuHX2u" target="_blank" class="social-icon"><i
-            class="fab fa-spotify"></i></a>
+      <div class="flex items-center gap-4 mb-10 reveal-item" data-reveal style="--reveal-delay: 300ms;">
+        <a href="https://www.instagram.com/studioieks/" target="_blank" class="social-icon reveal-item" data-reveal
+          style="--reveal-delay: 340ms;"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/studioieks/" target="_blank" class="social-icon reveal-item" data-reveal
+          style="--reveal-delay: 380ms;"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.youtube.com/" target="_blank" class="social-icon reveal-item" data-reveal
+          style="--reveal-delay: 420ms;"><i class="fab fa-youtube"></i></a>
+        <a href="https://open.spotify.com/artist/4udVTEt1fdLiDL9lQuHX2u" target="_blank" class="social-icon reveal-item"
+          data-reveal style="--reveal-delay: 460ms;"><i class="fab fa-spotify"></i></a>
       </div>
       <!-- Spotify embed -->
-      <div class="overflow-hidden rounded-lg mb-10">
+      <div class="overflow-hidden rounded-lg mb-10 reveal-item embed-reveal" data-reveal style="--reveal-delay: 500ms;">
         <iframe src="https://open.spotify.com/embed/artist/4udVTEt1fdLiDL9lQuHX2u" width="100%" height="400"
           frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen
           loading="lazy"></iframe>
       </div>
       <!-- YouTube embed -->
-      <div class="overflow-hidden rounded-lg bg-white/50 w-full rounded-lg overflow-hidden"
-        style="padding-top: 56.25%; position: relative;">
+      <div class="overflow-hidden rounded-lg bg-white/50 w-full rounded-lg overflow-hidden reveal-item embed-reveal"
+        data-reveal style="--reveal-delay: 560ms; padding-top: 56.25%; position: relative;">
         <iframe src="https://www.youtube.com/embed/6TP1lIe-ZLk" title="YouTube video" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
@@ -313,44 +435,97 @@
   </section>
 
   <!-- Footer -->
-  <footer class="container mx-auto px-4 py-8 border-t border-gray-700">
+  <footer class="container mx-auto px-4 py-8 border-t border-gray-700 reveal-item footer-reveal" data-reveal
+    style="--reveal-delay: 120ms;">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm">
       <!-- Contact information -->
-      <div class="flex flex-col space-y-2">
-        <div class="flex items-center space-x-2">
-          <span>Info@studioieks.com</span>
-          <img src="https://api.iconify.design/bi/copy.svg?color=%23fff" alt="Copy email"
-            class="w-3 h-3 cursor-pointer opacity-60 hover:opacity-100" onclick="copyToClipboard('Info@studioieks.com')"
-            title="Copy email to clipboard" loading="lazy" />
+      <div class="flex flex-col space-y-2 reveal-item" data-reveal style="--reveal-delay: 170ms;">
+        <div class="flex items-center space-x-2 opacity-50">
+          <span><a href="mailto:info@studioieks.com">Info@studioieks.com</a></span>
         </div>
-        <div class="flex items-center space-x-2">
-          <span>+31 (070) 3998279</span>
-          <img src="https://api.iconify.design/bi/copy.svg?color=%23fff" alt="Copy email"
-            class="w-3 h-3 cursor-pointer opacity-60 hover:opacity-100" onclick="copyToClipboard('Info@studioieks.com')"
-            title="Copy email to clipboard" loading="lazy" />
+        <div class="flex items-center space-x-2 opacity-50">
+          <span><a href="tel:+31628230261">+31 6 28230261</a></span>
         </div>
         <span class="opacity-50">Oostzijde 76, 1502 BJ Zaandam Nederland</span>
       </div>
       <!-- Social icons again -->
-      <div class="flex items-center gap-4">
-        <a href="https://www.instagram.com/studioieks/" target="_blank" class="social-icon"><i
-            class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/studioieks/" target="_blank" class="social-icon"><i
-            class="fab fa-facebook-f"></i></a>
-        <a href="https://www.linkedin.com/company/studioieks" target="_blank" class="social-icon"><i
-            class="fab fa-linkedin-in"></i></a>
+      <div class="flex items-center gap-4 reveal-item" data-reveal style="--reveal-delay: 220ms;">
+        <a href="https://www.instagram.com/studioieks/" target="_blank" class="social-icon reveal-item" data-reveal
+          style="--reveal-delay: 260ms;"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/studioieks/" target="_blank" class="social-icon reveal-item" data-reveal
+          style="--reveal-delay: 300ms;"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.linkedin.com/company/studioieks" target="_blank" class="social-icon reveal-item"
+          data-reveal style="--reveal-delay: 340ms;"><i class="fab fa-linkedin-in"></i></a>
       </div>
     </div>
-    <div class="mt-6 flex flex-col md:flex-row items-center justify-between text-xs space-y-2 md:space-y-0">
-      <span>© <span id="currentYear"></span> Studio Ieks. All Rights Reserved</span>
-      <div class="flex items-center space-x-4">
-        <a href="https://cdn.prod.website-files.com/67615e8f41f98e91d0261d31" class="footer-link" target="_blank">Terms
+    <div class="mt-6 flex flex-col items-center justify-between text-xs space-y-2 reveal-item" data-reveal
+      style="--reveal-delay: 280ms;">
+      <span class="block md:hidden">© <span id="currentYear"></span> Studio Ieks. All Rights Reserved</span>
+      <div class="flex items-center space-x-4 w-full justify-between">
+        <a href="https://cdn.prod.website-files.com/67615e8f41f98e91d0261d31" class="footer-link opacity-50"
+          target="_blank">Terms
           &amp; Conditions</a>
+        <span class="hidden md:block">© <span id="currentYear"></span> Studio Ieks. All Rights Reserved</span>
         <a href="https://www.mauricevandorst.com/" class="footer-link" target="_blank">Website by <span
             class="inline-flex text-white/70">van Dorst</span></a>
       </div>
     </div>
   </footer>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="contact-modal" aria-hidden="true">
+    <div class="contact-panel">
+      <div class="flex items-start justify-between gap-3 mb-5">
+        <div>
+          <p class="uppercase text-xs tracking-[0.22em] text-white/65">Bookings</p>
+          <h2 class="text-2xl font-semibold mt-1">Neem contact op</h2>
+        </div>
+        <button id="closeContactModal" type="button"
+          class="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 hover:opacity-80 transition-colors text-white"
+          aria-label="Sluit contactformulier">
+          <img src="https://api.iconify.design/fa6-solid:xmark.svg?color=%23fff" alt="" aria-hidden="true"
+            class="w-5 h-5 opacity-[80%]" />
+        </button>
+      </div>
+
+      <form id="contactForm" class="space-y-3">
+        <div>
+          <label for="contactName" class="block text-sm mb-1">Naam</label>
+          <input id="contactName" name="name" class="contact-input" type="text" placeholder="" required />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="contactEmail" class="block text-sm mb-1">E-mail</label>
+            <input id="contactEmail" name="email" class="contact-input" type="email" placeholder="" required />
+          </div>
+          <div>
+            <label for="contactPhone" class="block text-sm mb-1">Telefoon</label>
+            <input id="contactPhone" name="phone" class="contact-input" type="tel" placeholder="" />
+          </div>
+        </div>
+        <div>
+          <label for="contactMessage" class="block text-sm mb-1">Bericht</label>
+          <textarea id="contactMessage" name="message" class="contact-input min-h-[140px]"
+            placeholder="Vertel kort wat je wilt boeken..." required></textarea>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
+          <button id="submitContact" type="submit"
+            class="w-full sm:w-auto py-3 px-7 uppercase text-sm tracking-wider bg-white text-black font-semibold transition-all duration-300 hover:px-9">
+            Verstuur aanvraag
+          </button>
+          <button id="mailtoFallback" type="button"
+            class="w-full sm:w-auto py-3 px-7 uppercase text-sm tracking-wider text-white border border-white/30 font-semibold transition-all duration-300 hover:border-white/60">
+            Open email app
+          </button>
+        </div>
+        <p id="contactStatus" class="contact-note pt-1" role="status" aria-live="polite">
+          Voor bookings kun je ook direct mailen via je e-mailapp of bellen via <a href="tel:+0628230261"
+            class="underline">+06 28230261</a>.
+        </p>
+      </form>
+    </div>
+  </div>
 
   <!-- JavaScript for toggling biography and copying text -->
   <script>
@@ -388,6 +563,14 @@
       }
     });
 
+    const revealTargets = document.querySelectorAll('[data-reveal]');
+
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => {
+        revealTargets.forEach((target) => target.classList.add('is-visible'));
+      });
+    });
+
     function copyToClipboard(text) {
       navigator.clipboard
         .writeText(text)
@@ -398,6 +581,109 @@
           console.error('Failed to copy: ', err);
         });
     }
+
+    const contactModal = document.getElementById('contactModal');
+    const contactForm = document.getElementById('contactForm');
+    const closeContactModalButton = document.getElementById('closeContactModal');
+    const openContactButtons = document.querySelectorAll('.js-open-contact');
+    const contactStatus = document.getElementById('contactStatus');
+    const submitContactButton = document.getElementById('submitContact');
+    const mailtoFallbackButton = document.getElementById('mailtoFallback');
+
+    function buildMailtoUrl() {
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const phone = document.getElementById('contactPhone').value.trim();
+      const message = document.getElementById('contactMessage').value.trim();
+
+      const subject = encodeURIComponent(`Nieuwe booking aanvraag van ${name || 'websitebezoeker'}`);
+      const body = encodeURIComponent(
+        `Naam: ${name || '-'}\nE-mail: ${email || '-'}\nTelefoon: ${phone || '-'}\n\nBericht:\n${message || '-'}`
+      );
+
+      return `mailto:info@studioieks.com?subject=${subject}&body=${body}`;
+    }
+
+    function openContactModal() {
+      contactModal.classList.add('is-open');
+      contactModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('contactName').focus();
+    }
+
+    function closeContactModal() {
+      contactModal.classList.remove('is-open');
+      contactModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    openContactButtons.forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        openContactModal();
+      });
+    });
+
+    closeContactModalButton.addEventListener('click', closeContactModal);
+
+    contactModal.addEventListener('click', (event) => {
+      if (event.target === contactModal) {
+        closeContactModal();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && contactModal.classList.contains('is-open')) {
+        closeContactModal();
+      }
+    });
+
+    mailtoFallbackButton.addEventListener('click', () => {
+      window.location.href = buildMailtoUrl();
+    });
+
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      submitContactButton.disabled = true;
+      submitContactButton.classList.add('opacity-70', 'cursor-not-allowed');
+      contactStatus.textContent = 'Bezig met verzenden...';
+
+      const payload = {
+        name: document.getElementById('contactName').value.trim(),
+        email: document.getElementById('contactEmail').value.trim(),
+        phone: document.getElementById('contactPhone').value.trim(),
+        message: document.getElementById('contactMessage').value.trim(),
+        _subject: 'Nieuwe booking aanvraag via Studio Ieks',
+        _template: 'table',
+        _captcha: 'false'
+      };
+
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/vandorstmaurice@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('FormSubmit request failed');
+        }
+
+        contactStatus.textContent = 'Je aanvraag is verzonden. We nemen zo snel mogelijk contact op.';
+        contactForm.reset();
+      } catch (error) {
+        console.error(error);
+        contactStatus.textContent =
+          'Verzenden via lukte niet. Gebruik de knop "Open e-mail app".';
+      } finally {
+        submitContactButton.disabled = false;
+        submitContactButton.classList.remove('opacity-70', 'cursor-not-allowed');
+      }
+    });
   </script>
 </body>
 
