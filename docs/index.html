@@ -138,6 +138,10 @@
       transform: translateY(0) scale(1);
     }
 
+    .logo-reveal {
+      transition: opacity 980ms ease, transform 1100ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
     .footer-reveal {
       transform: translateY(34px);
     }
@@ -289,14 +293,17 @@
     <!-- Logo -->
     <div class="flex items-center space-x-3">
       <!-- Replace with downloaded logo if available -->
-      <a href="#" class="transition-all duration-150 hover:opacity-80 pointer-events-auto">
+      <a href="#"
+        class="transition-all duration-[400ms] hover:opacity-80 pointer-events-auto reveal-item embed-reveal logo-reveal"
+        data-reveal style="--reveal-delay: 0ms;">
         <img src="./assets/images/logo.jpg" alt="StudioIEKS logo" class="h-32 w-auto" />
       </a>
     </div>
   </header>
 
   <!-- Hero section -->
-  <section class="container mx-auto px-4 pb-10 flex flex-col md:flex-row items-start gap-12 md:gap-18 lg:gap-24 overflow-hidden">
+  <section
+    class="container mx-auto px-4 pb-10 flex flex-col md:flex-row items-start gap-12 md:gap-18 lg:gap-24 overflow-hidden">
     <!-- Left column: portrait -->
     <div
       class="flex justify-center mt-4 md:mt-12 sm:pt-8 md:pt-20 items-center w-full z-[90] md:w-1/2 md:sticky md:top-8 md:self-start">
@@ -435,8 +442,8 @@
   </section>
 
   <!-- Footer -->
-  <footer class="container mx-auto px-4 py-8 border-t border-gray-700 overflow-hidden reveal-item footer-reveal" data-reveal
-    style="--reveal-delay: 120ms;">
+  <footer class="container mx-auto px-4 py-8 border-t border-gray-700 overflow-hidden reveal-item footer-reveal"
+    data-reveal style="--reveal-delay: 120ms;">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm">
       <!-- Contact information -->
       <div class="flex flex-col space-y-2 reveal-item" data-reveal style="--reveal-delay: 170ms;">
@@ -446,7 +453,7 @@
         <div class="flex items-center space-x-2 opacity-50">
           <span><a href="tel:+31628230261">+31 6 28230261</a></span>
         </div>
-        <span class="opacity-50">Oostzijde 76, 1502 BJ Zaandam Nederland</span>
+        <span class="opacity-50">Oostzijde 76, 1502 BJ Zaandam</span>
       </div>
       <!-- Social icons again -->
       <div class="flex items-center gap-4 reveal-item" data-reveal style="--reveal-delay: 220ms;">
