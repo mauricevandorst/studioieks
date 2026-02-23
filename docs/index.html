@@ -27,10 +27,45 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: var(--black);
-      background-size: 4px 4px;
+      background:
+        radial-gradient(118% 96% at 24% 19%, #714409 0%, #2b0f01 72%),
+        radial-gradient(82% 68% at 84% 76%, rgba(141, 85, 2, 0.08) 0%, rgba(43, 15, 1, 0) 76%),
+        #2b0f01;
       color: var(--white);
       line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -10%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      background:
+        radial-gradient(135% 118% at 50% 122%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, 0.55) 72%, rgba(0, 0, 0, 0.86) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.72'/%3E%3C/svg%3E");
+      background-size: cover, 220px 220px;
+      background-repeat: no-repeat, repeat;
+      mix-blend-mode: soft-light;
+      opacity: 0.24;
+      animation: grain-shift 900ms steps(3) infinite;
+    }
+
+    body::after {
+      background:
+        radial-gradient(42% 36% at 16% 14%, rgba(192, 108, 18, 0.18) 0%, rgba(192, 108, 18, 0) 74%),
+        radial-gradient(48% 34% at 76% 30%, rgba(168, 80, 15, 0.14) 0%, rgba(168, 80, 15, 0) 76%),
+        radial-gradient(54% 44% at 30% 34%, rgba(255, 169, 86, 0.12) 0%, rgba(255, 169, 86, 0) 72%),
+        radial-gradient(52% 48% at 86% 82%, rgba(117, 56, 10, 0.08) 0%, rgba(117, 56, 10, 0) 78%);
+      filter: blur(18px) saturate(112%);
+      opacity: 0.82;
+      animation: smoke-drift 18s ease-in-out infinite alternate, spotlight-pulse 8s ease-in-out infinite;
     }
 
     h1,
@@ -83,15 +118,35 @@
 
     .portrait-frame {
       animation: portrait-enter 1.45s cubic-bezier(0.16, 1, 0.3, 1) both,
-        portrait-float-grow 3.2s ease-in-out 1.45s infinite;
+        portrait-float-grow 5.2s ease-in-out 1.45s infinite;
       transform-origin: center top;
       overflow: visible;
       will-change: transform;
     }
 
     .portrait-media {
+      position: relative;
       overflow: hidden;
       border-radius: 0.75rem;
+    }
+
+    .portrait-media img {
+      display: block;
+      position: relative;
+      z-index: 0;
+    }
+
+    .portrait-noise {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image: url("https://www.onlygfx.com/wp-content/uploads/2019/02/7-noise-texture-overlays-4.png");
+      background-size: cover;
+      background-position: center;
+      mix-blend-mode: soft-light;
+      opacity: 0.4;
+      animation: portrait-noise-fade-in 1.1s ease-out 0.45s both;
     }
 
     .portrait-frame::after {
@@ -246,7 +301,7 @@
       }
 
       50% {
-        transform: translateY(-12px) scale(1.02);
+        transform: translateY(-24px) scale(1.02);
       }
     }
 
@@ -266,6 +321,16 @@
       }
     }
 
+    @keyframes portrait-noise-fade-in {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 0.4;
+      }
+    }
+
     @keyframes signature-enter {
       0% {
         transform: translateY(26px) scale(0.97);
@@ -278,10 +343,51 @@
       }
     }
 
+    @keyframes smoke-drift {
+      0% {
+        transform: translate3d(-2.2%, -1.4%, 0) scale(1);
+      }
+
+      50% {
+        transform: translate3d(1.4%, 1.8%, 0) scale(1.03);
+      }
+
+      100% {
+        transform: translate3d(-1%, 1.1%, 0) scale(1.01);
+      }
+    }
+
+    @keyframes spotlight-pulse {
+
+      0%,
+      100% {
+        opacity: 0.76;
+      }
+
+      50% {
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes grain-shift {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      50% {
+        transform: translate3d(-0.6%, 0.5%, 0);
+      }
+
+      100% {
+        transform: translate3d(0.5%, -0.5%, 0);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
 
       .portrait-frame,
       .portrait-frame::after,
+      .portrait-noise,
       .signature-overlay,
       .reveal-item {
         animation: none;
@@ -289,30 +395,37 @@
         opacity: 1;
         transform: none;
       }
+
+      body::before,
+      body::after {
+        animation: none;
+      }
     }
   </style>
 </head>
 
 <body>
   <!-- Header -->
-  <header class="md:absolute top-0 left-0 w-full px-4 flex items-center justify-center pointer-events-none">
-    <!-- Logo -->
-    <div class="flex items-center space-x-3">
-      <!-- Replace with downloaded logo if available -->
-      <a href="./"
-        class="transition-all duration-[400ms] hover:opacity-80 pointer-events-auto reveal-item embed-reveal logo-reveal"
-        data-reveal style="--reveal-delay: 0ms;">
-        <img src="./assets/images/logo.jpg" alt="StudioIEKS logo" class="h-32 w-auto" />
-      </a>
+  <header class="md:absolute top-0 left-0 w-full px-4 flex items-center justify-center pointer-events-none mx-auto">
+    <div class="w-full max-w-7xl flex items-center justify-center">
+      <!-- Logo -->
+      <div class="flex items-center space-x-3">
+        <!-- Replace with downloaded logo if available -->
+        <a href="./"
+          class="transition-all duration-[400ms] hover:opacity-80 pointer-events-auto reveal-item embed-reveal logo-reveal"
+          data-reveal style="--reveal-delay: 0ms;">
+          <img src="./assets/images/logo.jpg" alt="StudioIEKS logo" class="h-28 w-auto" />
+        </a>
+      </div>
     </div>
   </header>
 
   <!-- Hero section -->
   <section
-    class="container mx-auto px-4 pb-10 flex flex-col md:flex-row items-start gap-12 md:gap-18 lg:gap-24 overflow-hidden">
+    class="container mx-auto px-4 pb-10 pt-[15px] flex flex-col md:flex-row items-start gap-12 md:gap-18 lg:gap-24 max-w-7xl">
     <!-- Left column: portrait -->
     <div
-      class="flex justify-center mt-4 md:mt-12 sm:pt-8 md:pt-20 items-center w-full z-[90] md:w-1/2 md:sticky md:top-8 md:self-start">
+      class="flex justify-center pt-10 sm:pt-8 md:pt-20 items-center w-full z-[90] md:w-1/2 md:sticky md:top-8 md:self-start">
 
       <div class="flex flex-col gap-8">
         <!-- Portrait with signature overlay -->
@@ -320,7 +433,8 @@
           <div class="portrait-frame relative flex justify-end items-end shadow-lg mx-8 sm:mx-0">
             <div class="portrait-media">
               <img src="./assets/images/portrait.png" alt="Artist portrait"
-                class="max-w-[350px] sm:max-w-[450px] object-cover object-top w-full" />
+                class="max-w-[350px] sm:max-w-[450px] max-h-[50vh] md:max-h-[60vh] object-cover object-top w-full" />
+              <div class="portrait-noise" aria-hidden="true"></div>
             </div>
 
             <!-- Signature overlay (placed at bottom right) -->
@@ -339,7 +453,7 @@
               class="w-full lg:w-max btn btn-primary transition-all duration-150 hover:opacity-80 reveal-item js-open-contact"
               data-reveal style="--reveal-delay: 180ms;">
               <div
-                class="w-full py-3 px-8 uppercase text-sm tracking-wider bg-white text-center text-black font-semibold transition-all duration-300 hover:px-10">
+                class="w-full py-3 px-8 uppercase text-sm tracking-wider bg-white text-center text-black rounded-xl font-semibold transition-all duration-300 hover:px-10">
                 Book now
               </div>
             </a>
@@ -347,35 +461,43 @@
               class="w-full lg:w-max btn btn-primary transition-all duration-150 hover:opacity-80 reveal-item"
               data-reveal style="--reveal-delay: 240ms;">
               <div
-                class="w-full py-3 px-8 uppercase text-sm tracking-wider text-center text-white border-[1px] border-white/30 font-semibold transition-all duration-300 hover:px-10">
+                class="w-full py-3 px-8 uppercase text-sm tracking-wider text-center text-white border-[1px] rounded-xl border-white/30 font-semibold transition-all duration-300 hover:px-10">
                 Download Presskit
               </div>
             </a>
           </div>
-          <div class="flex items-center justify-center flex-wrap gap-4 reveal-item" data-reveal
+          <div class="flex items-center justify-center flex-wrap gap-2 reveal-item" data-reveal
             style="--reveal-delay: 300ms;">
-            <a href="https://www.instagram.com/st.van444" aria-label="Instagram"
-              class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
-              <img src="https://cdn.simpleicons.org/instagram/white" alt="Instagram" class="w-6 h-6" />
+            <a href="https://open.spotify.com/artist/4udVTEt1fdLiDL9lQuHX2u" aria-label="Spotify" class="relative">
+              <div style="clip-path: url(#squircleClip)"
+                class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
+                <img src="https://cdn.simpleicons.org/spotify/white" alt="Spotify" class="w-5 h-5" />
+              </div>
             </a>
-            <a href="https://www.facebook.com/st.van444" aria-label="Facebook"
-              class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
-              <img src="https://cdn.simpleicons.org/facebook/white" alt="Facebook" class="w-6 h-6" />
+            <a href="https://www.youtube.com/@StudioIEKS" aria-label="YouTube" class="relative">
+              <div style="clip-path: url(#squircleClip)"
+                class="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
+                <img src="https://cdn.simpleicons.org/youtube/white" alt="YouTube" class="w-5 h-5" />
+              </div>
             </a>
-            <a href="https://www.youtube.com/@StudioIEKS" aria-label="YouTube"
-              class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
-              <img src="https://cdn.simpleicons.org/youtube/white" alt="YouTube" class="w-6 h-6" />
+            <a href="https://www.facebook.com/st.van444" aria-label="Facebook" class="relative">
+              <div style="clip-path: url(#squircleClip)"
+                class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
+                <img src="https://cdn.simpleicons.org/facebook/white" alt="Facebook" class="w-5 h-5" />
+              </div>
             </a>
-            <a href="https://open.spotify.com/artist/4udVTEt1fdLiDL9lQuHX2u" aria-label="Spotify"
-              class="w-12 h-12 flex items-center justify-center text-white border-[1px] border-white/30 transition-all duration-150 hover:opacity-80">
-              <img src="https://cdn.simpleicons.org/spotify/white" alt="Spotify" class="w-6 h-6" />
+            <a href="https://www.instagram.com/st.van444" aria-label="Instagram" class="relative">
+              <div style="clip-path: url(#squircleClip)"
+                class="w-10 h-10 bg-gradient-to-br from-[#405DE6] via-[#C13584] via-[#FD1D1D] to-[#FCAF45] rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
+                <img src="https://cdn.simpleicons.org/instagram/white" alt="Instagram" class="w-5 h-5" />
+              </div>
             </a>
           </div>
         </div>
       </div>
     </div>
     <!-- Right column: biography and controls -->
-    <div class="w-full flex flex-col md:w-1/2 md:mt-36">
+    <div class="container mx-auto w-full flex flex-col md:w-1/2 md:mt-36">
       <div class="w-full flex flex-col gap-4">
         <div class="flex justify-between">
           <h1 class="text-4xl font-semibold tracking-wide mb-6 reveal-item" data-reveal style="--reveal-delay: 80ms;">
@@ -383,13 +505,13 @@
           <a href="#" class="hidden md:block btn btn-primary hover:opacity-80 reveal-item js-open-contact" data-reveal
             style="--reveal-delay: 140ms;">
             <div
-              class="py-3 px-8 uppercase text-sm tracking-wider bg-white text-black font-semibold transition-all duration-300 hover:px-10">
+              class="py-3 px-8 uppercase text-sm tracking-wider bg-white text-black font-semibold rounded-xl transition-all duration-300 hover:px-10">
               Book now
             </div>
           </a>
         </div>
         <p id="bioExcerpt" class="text-sm tracking-wide reveal-item" data-reveal style="--reveal-delay: 180ms;">
-          ST.van is de meest frisse en energieke Afro/Latin upcoming artist uit Nederland. Half
+          ST.van is misschien wel de meest frisse en energieke Afro/Latin upcoming artist uit Nederland. Half
           Ecuadoriaans, half Nederlands-geboren in Amsterdam en grootgebracht in Zaandam 020X075. Twee steden, één
           sound. ST.van draagt ze allebei met trots op z’n rug en neemt die vibe overal mee naartoe.
         </p>
@@ -414,28 +536,21 @@
         </div>
         <span class="reveal-item" data-reveal style="--reveal-delay: 260ms;">
           <button id="toggleMore"
-            class="w-max px-6 py-3 border-b-[1px] border-[#a2671e] text-sm uppercase tracking-wide text-white font-medium self-start transition-opacity duration-50 hover:opacity-80">
+            class="w-max px-6 py-3 border-b-[1px] border-[#8c7070] text-sm uppercase tracking-wide text-white font-medium self-start transition-opacity duration-50 hover:opacity-80">
             Lees meer
           </button>
         </span>
       </div>
-      <!-- Social icons row -->
-      <div class="flex items-center gap-4 mb-10 reveal-item" data-reveal style="--reveal-delay: 300ms;">
-        <a href="https://www.instagram.com/studioieks/" target="_blank" class="social-icon reveal-item" data-reveal
-          style="--reveal-delay: 340ms;"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/studioieks/" target="_blank" class="social-icon reveal-item" data-reveal
-          style="--reveal-delay: 380ms;"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.youtube.com/" target="_blank" class="social-icon reveal-item" data-reveal
-          style="--reveal-delay: 420ms;"><i class="fab fa-youtube"></i></a>
-        <a href="https://open.spotify.com/artist/4udVTEt1fdLiDL9lQuHX2u" target="_blank" class="social-icon reveal-item"
-          data-reveal style="--reveal-delay: 460ms;"><i class="fab fa-spotify"></i></a>
-      </div>
       <!-- Spotify embed -->
-      <div class="overflow-hidden rounded-lg mb-10 reveal-item embed-reveal" data-reveal style="--reveal-delay: 500ms;">
+      <div class="overflow-hidden rounded-lg my-10 reveal-item embed-reveal" data-reveal style="--reveal-delay: 500ms;">
         <iframe src="https://open.spotify.com/embed/artist/4udVTEt1fdLiDL9lQuHX2u" width="100%" height="400"
           frameborder="0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen
           loading="lazy"></iframe>
       </div>
+      <p class="mb-3 text-xs md:text-sm uppercase tracking-[0.14em] text-[#d6a565] font-semibold reveal-item"
+        data-reveal style="--reveal-delay: 540ms;">
+        WAT DENK JE | ST.van ft TimmiTjon
+      </p>
       <!-- YouTube embed -->
       <div class="overflow-hidden rounded-lg bg-white/50 w-full rounded-lg overflow-hidden reveal-item embed-reveal"
         data-reveal style="--reveal-delay: 560ms; padding-top: 56.25%; position: relative;">
@@ -444,44 +559,87 @@
           allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
           loading="lazy"></iframe>
       </div>
+      <p class="mt-5 mb-3 text-xs md:text-sm uppercase tracking-[0.14em] text-[#d6a565] font-semibold reveal-item"
+        data-reveal style="--reveal-delay: 600ms;">
+        ST.van - We leven
+      </p>
+      <div class="overflow-hidden rounded-lg bg-white/50 w-full reveal-item embed-reveal" data-reveal
+        style="--reveal-delay: 620ms; padding-top: 56.25%; position: relative;">
+        <iframe src="https://www.youtube.com/embed/eGV2xKk31F8?si=9cuVMQ8PPA5dZBPg" title="YouTube video 2"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+          loading="lazy"></iframe>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="container mx-auto px-4 py-8 border-t border-gray-700 overflow-hidden reveal-item footer-reveal"
+  <footer class="container max-w-7xl mx-auto px-4 py-10 border-t border-white/20 overflow-hidden reveal-item footer-reveal"
     data-reveal style="--reveal-delay: 120ms;">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm">
-      <!-- Contact information -->
-      <div class="flex flex-col space-y-2 reveal-item" data-reveal style="--reveal-delay: 170ms;">
-        <div class="flex items-center space-x-2 opacity-50">
-          <span><a href="mailto:info@studioieks.com">Info@studioieks.com</a></span>
-        </div>
-        <div class="flex items-center space-x-2 opacity-50">
-          <span><a href="tel:+31628230261">+31 6 28230261</a></span>
-        </div>
-        <span class="opacity-50">Oostzijde 76, 1502 BJ Zaandam</span>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 text-sm">
+      <div class="md:col-span-5 reveal-item" data-reveal style="--reveal-delay: 170ms;">
+        <p class="uppercase text-[11px] text-white/55 tracking-[0.2em] font-semibold mb-3">Studio Ieks</p>
+        <h3 class="text-sm text-white/70 leading-tight font-semibold mb-2">Boek ST.van voor clubs, festivals en events.
+        </h3>
+        <p class="text-white/85 max-w-md">
+          Afro/Latin energy met een sound dat voor beweging zorgt. Neem contact op voor boekingen en vragen.
+        </p>
       </div>
-      <!-- Social icons again -->
-      <div class="flex items-center gap-4 reveal-item" data-reveal style="--reveal-delay: 220ms;">
-        <a href="https://www.instagram.com/studioieks/" target="_blank" class="social-icon reveal-item" data-reveal
-          style="--reveal-delay: 260ms;"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/studioieks/" target="_blank" class="social-icon reveal-item" data-reveal
-          style="--reveal-delay: 300ms;"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.linkedin.com/company/studioieks" target="_blank" class="social-icon reveal-item"
-          data-reveal style="--reveal-delay: 340ms;"><i class="fab fa-linkedin-in"></i></a>
+
+      <div class="md:col-span-4 reveal-item" data-reveal style="--reveal-delay: 220ms;">
+        <p class="uppercase text-[11px] tracking-[0.2em] text-white/55 font-semibold mb-3">Contact</p>
+        <div class="space-y-2 text-white/80">
+          <a href="mailto:info@studioieks.com" class="footer-link block w-max">info@studioieks.com</a>
+          <a href="tel:+31628230261" class="footer-link block w-max">+31 6 28230261</a>
+          <p class="text-white/60">Oostzijde 76, 1502 BJ Zaandam</p>
+        </div>
+      </div>
+
+      <div class="md:col-span-3 reveal-item" data-reveal style="--reveal-delay: 270ms;">
+        <p class="uppercase text-[11px] tracking-[0.2em] text-white/55 font-semibold mb-3">Volg Studio Ieks</p>
+        <div class="flex items-center gap-3 mb-4">
+          <a href="https://www.instagram.com/studioieks/" target="_blank" aria-label="Instagram" class="relative">
+            <div style="clip-path: url(#squircleClip)"
+              class="w-9 h-9 bg-gradient-to-br from-[#405DE6] via-[#C13584] via-[#FD1D1D] to-[#FCAF45] rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
+              <img src="https://cdn.simpleicons.org/instagram/white" alt="Instagram" class="h-4 h-4" />
+            </div>
+          </a>
+          <a href="https://www.facebook.com/studioieks/" target="_blank" aria-label="Facebook" class="relative">
+            <div style="clip-path: url(#squircleClip)"
+              class="w-9 h-9 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
+              <img src="https://cdn.simpleicons.org/facebook/white" alt="Facebook" class="h-4 h-4" />
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/company/studioieks" target="_blank" aria-label="LinkedIn" class="relative">
+            <div style="clip-path: url(#squircleClip)"
+              class="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
+              <svg class="h-4 h-4" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision"
+                text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd"
+                clip-rule="evenodd" viewBox="0 0 512 512">
+                <path fill="#fff"
+                  d="M474.919 0H38.592C17.72 0 0 16.504 0 36.841V475.14C0 495.496 11.629 512 32.492 512h436.327C489.718 512 512 495.496 512 475.14V36.841C512 16.504 495.809 0 474.919 0zM195.043 195.043h68.928v35.136h.755c10.505-18.945 41.541-38.177 79.921-38.177 73.655 0 94.214 39.108 94.214 111.538v135.321h-73.148V316.883c0-32.427-12.947-60.883-43.227-60.883-36.768 0-54.295 24.889-54.295 65.758v117.103h-73.148V195.043zM73.139 438.861h73.148V195.043H73.139v243.818zm82.289-329.148c0 25.258-20.457 45.715-45.715 45.715-25.258 0-45.715-20.457-45.715-45.715 0-25.258 20.457-45.715 45.715-45.715 25.258 0 45.715 20.457 45.715 45.715z" />
+              </svg>
+            </div>
+          </a>
+        </div>
+        <a href="#"
+          class="js-open-contact inline-flex items-center justify-center px-8 py-3 text-xs uppercase tracking-[0.16em] font-semibold border border-white/30 rounded-xl hover:border-white/60 transition-colors">
+          Book now
+        </a>
       </div>
     </div>
-    <div class="mt-6 flex flex-col items-center justify-between text-xs space-y-2 reveal-item" data-reveal
-      style="--reveal-delay: 280ms;">
-      <span class="block md:hidden">© <span id="currentYear"></span> Studio Ieks. All Rights Reserved</span>
-      <div class="flex items-center space-x-4 w-full justify-between">
-        <a href="https://cdn.prod.website-files.com/67615e8f41f98e91d0261d31" class="footer-link opacity-50"
-          target="_blank">Terms
+
+    <div
+      class="mt-8 pt-4 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-5 md:gap-3 text-xs text-white/60 reveal-item"
+      data-reveal style="--reveal-delay: 320ms;">
+      <div class="flex justify-between md:gap-3">
+        <a href="https://cdn.prod.website-files.com/67615e8f41f98e91d0261d31" class="footer-link" target="_blank">Terms
           &amp; Conditions</a>
-        <span class="hidden md:block">© <span id="currentYear"></span> Studio Ieks. All Rights Reserved</span>
-        <a href="https://www.mauricevandorst.com/" class="footer-link" target="_blank">Website by <span
-            class="inline-flex text-white/70">van Dorst</span></a>
+        <a href="https://www.mauricevandorst.com/" class="footer-link order-1" target="_blank">Website by <span
+            class="inline-flex text-white/80">van Dorst</span></a>
       </div>
+      <span class="text-center md:text-start">© <span id="currentYear"></span> Studio Ieks. All Rights Reserved</span>
     </div>
   </footer>
 
@@ -491,7 +649,7 @@
       <div class="flex items-start justify-between gap-3 mb-5">
         <div>
           <p class="uppercase text-xs tracking-[0.22em] text-white/65">Bookings</p>
-          <h2 class="text-2xl font-semibold mt-1">Neem contact op</h2>
+          <h2 class="text-2xl font-semibold mt-1">Boekingsformulier</h2>
         </div>
         <button id="closeContactModal" type="button"
           class="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 hover:opacity-80 transition-colors text-white"
@@ -524,17 +682,16 @@
 
         <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
           <button id="submitContact" type="submit"
-            class="w-full sm:w-auto py-3 px-7 uppercase text-sm tracking-wider bg-white text-black font-semibold transition-all duration-300 hover:px-9">
+            class="w-full sm:w-auto py-3 px-7 uppercase text-sm tracking-wider bg-white rounded-xl text-black font-semibold transition-all duration-300 hover:px-9">
             Verstuur aanvraag
           </button>
           <button id="mailtoFallback" type="button"
-            class="w-full sm:w-auto py-3 px-7 uppercase text-sm tracking-wider text-white border border-white/30 font-semibold transition-all duration-300 hover:border-white/60">
-            Open email app
+            class="w-full sm:w-auto py-3 px-7 uppercase text-sm tracking-wider text-white border border-white/30 rounded-xl font-semibold transition-all duration-300 hover:border-white/60">
+            Open email
           </button>
         </div>
         <p id="contactStatus" class="contact-note pt-1" role="status" aria-live="polite">
-          Voor bookings kun je ook direct mailen via je e-mailapp of bellen via <a href="tel:+0628230261"
-            class="underline">+06 28230261</a>.
+          Voor bookings kun je ook mailen of bellen via <a href="tel:+0628230261" class="underline">+06 28230261</a>.
         </p>
       </form>
     </div>
