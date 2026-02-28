@@ -60,19 +60,6 @@ h4 {
   font-family: 'Montserrat', sans-serif;
 }
 
-/* Buttons */
-.btn {
-  @apply inline-block uppercase tracking-wider font-semibold transition-all duration-300 px-8 py-3 text-sm;
-}
-
-.btn-primary {
-  @apply bg-white text-black border border-transparent hover:px-5;
-}
-
-.btn-secondary {
-  @apply text-white border border-gray-500 hover:border-gray-300 hover:text-gray-300;
-}
-
 /* Social icon squares */
 .social-icon {
   @apply flex items-center justify-center w-10 h-10 border border-gray-500 rounded transition-colors duration-200;
@@ -92,7 +79,7 @@ h4 {
   max-height: 0;
   opacity: 0;
   transform: translateY(-6px);
-  transition: max-height 420ms ease, opacity 280ms ease, transform 320ms ease;
+  transition: max-height 280ms ease, opacity 180ms ease, transform 220ms ease;
   will-change: max-height, opacity, transform;
 }
 
@@ -162,7 +149,7 @@ h4 {
 .reveal-item {
   opacity: 0;
   transform: translateY(26px) scale(0.985);
-  transition: opacity 620ms ease, transform 680ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 340ms ease, transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
@@ -182,7 +169,7 @@ h4 {
 
 .logo-reveal {
   transform: translateY(-30px) scale(0.98);
-  transition: opacity 980ms ease, transform 1100ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: opacity 520ms ease, transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .logo-reveal.is-visible {
   transform: translateY(0) scale(1);
@@ -425,22 +412,22 @@ h4 {
 }
 
 [data-reveal-delay="0"] { --reveal-delay: 0ms; }
-[data-reveal-delay="80"] { --reveal-delay: 80ms; }
-[data-reveal-delay="120"] { --reveal-delay: 120ms; }
-[data-reveal-delay="140"] { --reveal-delay: 140ms; }
-[data-reveal-delay="170"] { --reveal-delay: 170ms; }
-[data-reveal-delay="180"] { --reveal-delay: 180ms; }
-[data-reveal-delay="220"] { --reveal-delay: 220ms; }
-[data-reveal-delay="240"] { --reveal-delay: 240ms; }
-[data-reveal-delay="260"] { --reveal-delay: 260ms; }
-[data-reveal-delay="270"] { --reveal-delay: 270ms; }
-[data-reveal-delay="300"] { --reveal-delay: 300ms; }
-[data-reveal-delay="320"] { --reveal-delay: 320ms; }
-[data-reveal-delay="500"] { --reveal-delay: 500ms; }
-[data-reveal-delay="540"] { --reveal-delay: 540ms; }
-[data-reveal-delay="560"] { --reveal-delay: 560ms; }
-[data-reveal-delay="600"] { --reveal-delay: 600ms; }
-[data-reveal-delay="620"] { --reveal-delay: 620ms; }
+[data-reveal-delay="80"] { --reveal-delay: 35ms; }
+[data-reveal-delay="120"] { --reveal-delay: 55ms; }
+[data-reveal-delay="140"] { --reveal-delay: 70ms; }
+[data-reveal-delay="170"] { --reveal-delay: 85ms; }
+[data-reveal-delay="180"] { --reveal-delay: 95ms; }
+[data-reveal-delay="220"] { --reveal-delay: 115ms; }
+[data-reveal-delay="240"] { --reveal-delay: 130ms; }
+[data-reveal-delay="260"] { --reveal-delay: 145ms; }
+[data-reveal-delay="270"] { --reveal-delay: 155ms; }
+[data-reveal-delay="300"] { --reveal-delay: 170ms; }
+[data-reveal-delay="320"] { --reveal-delay: 185ms; }
+[data-reveal-delay="500"] { --reveal-delay: 230ms; }
+[data-reveal-delay="540"] { --reveal-delay: 250ms; }
+[data-reveal-delay="560"] { --reveal-delay: 265ms; }
+[data-reveal-delay="600"] { --reveal-delay: 285ms; }
+[data-reveal-delay="620"] { --reveal-delay: 300ms; }
 
 .squircle-clip {
   clip-path: url(#squircleClip);
