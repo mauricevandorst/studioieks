@@ -28,9 +28,9 @@
     body {
       font-family: 'Inter', sans-serif;
       background:
-        radial-gradient(118% 96% at 24% 19%, #714409 0%, #2b0f01 72%),
+        radial-gradient(118% 96% at 24% 19%, #211313 0%, #211313 72%),
         radial-gradient(82% 68% at 84% 76%, rgba(141, 85, 2, 0.08) 0%, rgba(43, 15, 1, 0) 76%),
-        #2b0f01;
+        #2b0f01; /*#2b0f01;*/
       color: var(--white);
       line-height: 1.6;
       position: relative;
@@ -168,7 +168,7 @@
 
     .signature-overlay {
       z-index: 2;
-      animation: signature-enter 1.5s ease-out 0.5s both;
+      animation: signature-enter 1.5s ease-out 0s both;
       will-change: transform, opacity;
     }
 
@@ -337,9 +337,19 @@
         opacity: 0;
       }
 
-      100% {
+      70% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+      }
+
+      85% {
         transform: translateY(0) scale(1);
         opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
       }
     }
 
@@ -432,16 +442,16 @@
         <div class="relative flex flex-col justify-center items-center">
           <div class="portrait-frame relative flex justify-end items-end shadow-lg mx-8 sm:mx-0">
             <div class="portrait-media">
-              <img src="./assets/images/portrait.png" alt="Artist portrait"
+              <img src="./assets/images/portrait.jpg" alt="Artist portrait"
                 class="max-w-[350px] sm:max-w-[450px] max-h-[50vh] md:max-h-[60vh] object-cover object-top w-full" />
-              <div class="portrait-noise" aria-hidden="true"></div>
+              <!-- <div class="portrait-noise" aria-hidden="true"></div> -->
             </div>
 
             <!-- Signature overlay (placed at bottom right) -->
-            <div class="signature-overlay absolute max-w-xs bottom-[-55px] right-[-35px]">
+            <div class="signature-overlay absolute max-w-xs bottom-[-30px] md:bottom-[-38px] right-[-36px] rotate-[9deg]">
               <!-- Use image or text-based signature -->
-              <img src="./assets/images/signature.avif" alt="Signature"
-                class="w-36 md:w-36 h-auto mix-blend-screen z-[91]" />
+              <img src="./assets/images/signature.png" alt="Signature"
+                class="w-36 md:w-44 h-auto mix-blend-screen z-[91]" />
             </div>
           </div>
         </div>
@@ -470,7 +480,7 @@
             style="--reveal-delay: 300ms;">
             <a href="https://open.spotify.com/artist/4udVTEt1fdLiDL9lQuHX2u" aria-label="Spotify" class="relative">
               <div style="clip-path: url(#squircleClip)"
-                class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
+                class="w-10 h-10 bg-gradient-to-br from-green-600 to-green-700 rounded-xl flex items-center justify-center shadow-lg cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl">
                 <img src="https://cdn.simpleicons.org/spotify/white" alt="Spotify" class="w-5 h-5" />
               </div>
             </a>
@@ -734,12 +744,17 @@
     });
 
     const revealTargets = document.querySelectorAll('[data-reveal]');
-
-    window.addEventListener('load', () => {
+    const revealTargetsNow = () => {
       requestAnimationFrame(() => {
         revealTargets.forEach((target) => target.classList.add('is-visible'));
       });
-    });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', revealTargetsNow, { once: true });
+    } else {
+      revealTargetsNow();
+    }
 
     function copyToClipboard(text) {
       navigator.clipboard
