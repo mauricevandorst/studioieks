@@ -6,6 +6,10 @@
   --purp: #60267f;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background:
@@ -399,6 +403,9 @@ h4 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
   .portrait-frame,
   .portrait-media::after,
