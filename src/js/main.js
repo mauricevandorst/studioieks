@@ -1,243 +1,172 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Scroll progress bar update
-  const progressBar = document.getElementById('progress-bar');
-  const updateProgress = () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.body.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    progressBar.style.width = progress + '%';
-  };
-  window.addEventListener('scroll', updateProgress);
-  updateProgress();
+document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-  // Parallax effect on hero layers
-  const parallaxLayers = document.querySelectorAll('.parallax-layer');
-  const parallaxHandler = () => {
-    const scrollTop = window.scrollY;
-    parallaxLayers.forEach(layer => {
-      const speed = parseFloat(layer.dataset.speed || 0);
-      layer.style.transform = `translateY(${scrollTop * speed}px)`;
-    });
-    // Manifest float effect
-    const manifest = document.getElementById('manifest');
-    if (manifest) {
-      const offset = Math.min(window.scrollY * 0.02, 8);
-      manifest.style.transform = `translateY(${offset}px)`;
-    }
-    requestAnimationFrame(parallaxHandler);
-  };
-  requestAnimationFrame(parallaxHandler);
+const toggleButton = document.getElementById('toggleMore');
+const bioMore = document.getElementById('bioMore');
+let expanded = false;
 
-  // Reveal on scroll using IntersectionObserver
-  const revealEls = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  revealEls.forEach(el => revealObserver.observe(el));
-
-  // Gear item highlight on scroll
-  const gearItems = document.querySelectorAll('.gear-item');
-  const gearObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      entry.target.classList.toggle('text-accent', entry.isIntersecting);
-    });
-  }, { threshold: 0.6 });
-  gearItems.forEach(item => gearObserver.observe(item));
-
-  // JS marquee for smooth, continuous horizontal movement
-  const marqueeInner = document.getElementById('marquee-inner');
-  if (marqueeInner && getComputedStyle(marqueeInner).display !== 'none') {
-    const baseHTML = marqueeInner.innerHTML;
-    let cycleWidth = 0; // width of one logical cycle
-    let offset = 0;
-    let lastTime = performance.now();
-    let animationStarted = false;
-    const speed = 70; // px/sec
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const animateMarquee = time => {
-      const dt = (time - lastTime) / 1000;
-      lastTime = time;
-      if (!document.hidden) {
-        offset += speed * dt;
-        if (offset >= cycleWidth) offset -= cycleWidth;
-        marqueeInner.style.transform = `translate3d(${-offset}px,0,0)`;
-      }
-      requestAnimationFrame(animateMarquee);
-    };
-
-    const startAnimationIfReady = () => {
-      if (reduceMotion || animationStarted || cycleWidth <= 0) return;
-      animationStarted = true;
-      lastTime = performance.now();
-      requestAnimationFrame(animateMarquee);
-    };
-
-    const buildMarqueeTrack = () => {
-      marqueeInner.innerHTML = baseHTML;
-      cycleWidth = marqueeInner.scrollWidth;
-      if (cycleWidth === 0) return;
-
-      const containerWidth = marqueeInner.parentElement ? marqueeInner.parentElement.clientWidth : window.innerWidth;
-      // Ensure enough content is present so there is always the next cycle available.
-      const targetWidth = containerWidth + (cycleWidth * 2);
-      let safety = 0;
-      while (marqueeInner.scrollWidth < targetWidth && safety < 12) {
-        marqueeInner.insertAdjacentHTML('beforeend', baseHTML);
-        safety += 1;
-      }
-
-      if (cycleWidth > 0) offset %= cycleWidth;
-      startAnimationIfReady();
-    };
-
-    buildMarqueeTrack();
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(buildMarqueeTrack);
-    }
-    marqueeInner.querySelectorAll('img').forEach(img => {
-      if (img.complete) return;
-      img.addEventListener('load', buildMarqueeTrack, { once: true });
-      img.addEventListener('error', buildMarqueeTrack, { once: true });
-    });
-    window.addEventListener('resize', buildMarqueeTrack, { passive: true });
-    startAnimationIfReady();
+function setExpandedState(isExpanded) {
+  if (isExpanded) {
+    bioMore.classList.add('is-open');
+    bioMore.setAttribute('aria-hidden', 'false');
+    bioMore.style.maxHeight = `${bioMore.scrollHeight}px`;
+    return;
   }
 
-  // Accordion toggling
-  document.querySelectorAll('.accordion-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const content = header.nextElementSibling;
-      const expanded = header.classList.contains('expanded');
-      if (expanded) {
-        content.style.maxHeight = null;
-        header.classList.remove('expanded');
-      } else {
-        content.style.maxHeight = content.scrollHeight + 'px';
-        header.classList.add('expanded');
-      }
-    });
-  });
+  bioMore.style.maxHeight = `${bioMore.scrollHeight}px`;
+  // Force reflow so the collapse transition always starts from the current height.
+  bioMore.offsetHeight;
+  bioMore.classList.remove('is-open');
+  bioMore.setAttribute('aria-hidden', 'true');
+  bioMore.style.maxHeight = '0px';
+}
 
-  // Mobile overlay menu behavior (open/close, escape, outside click, link click).
-  const mobileMenuTrigger = document.querySelector('.mobile-menu-trigger');
-  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-  const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-  if (mobileMenuTrigger && mobileMenuOverlay && mobileMenuPanel) {
-    const closeTargets = mobileMenuOverlay.querySelectorAll('[data-mobile-menu-close]');
-    const panelLinks = mobileMenuPanel.querySelectorAll('a');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const CLOSE_DELAY_MS = reducedMotion ? 0 : 240;
-    let isMenuOpen = false;
-    let closeTimer;
+toggleButton.addEventListener('click', () => {
+  expanded = !expanded;
+  setExpandedState(expanded);
+  toggleButton.textContent = expanded ? 'Lees minder' : 'Lees meer';
+});
 
-    const setMenuState = open => {
-      isMenuOpen = open;
-      mobileMenuTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      mobileMenuPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
-      document.body.classList.toggle('mobile-menu-open', open);
-      mobileMenuOverlay.classList.toggle('is-open', open);
-    };
-
-    const openMenu = () => {
-      clearTimeout(closeTimer);
-      mobileMenuOverlay.hidden = false;
-      requestAnimationFrame(() => {
-        setMenuState(true);
-      });
-    };
-
-    const closeMenu = (restoreFocus = false) => {
-      clearTimeout(closeTimer);
-      setMenuState(false);
-      closeTimer = setTimeout(() => {
-        mobileMenuOverlay.hidden = true;
-        if (restoreFocus) mobileMenuTrigger.focus();
-      }, CLOSE_DELAY_MS);
-    };
-
-    mobileMenuTrigger.addEventListener('click', () => {
-      if (isMenuOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-
-    closeTargets.forEach(target => {
-      target.addEventListener('click', () => closeMenu(true));
-    });
-
-    panelLinks.forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    window.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && isMenuOpen) {
-        closeMenu(true);
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768 && isMenuOpen) {
-        closeMenu();
-      }
-    });
+window.addEventListener('resize', () => {
+  if (expanded) {
+    bioMore.style.maxHeight = `${bioMore.scrollHeight}px`;
   }
+});
 
-  // Press kit download with loading animation.
-  const downloadBtn = document.getElementById('downloadBtn');
-  if (downloadBtn) {
-    const loader = downloadBtn.querySelector('.loader');
-    const buttonText = downloadBtn.querySelector('.button-text');
-    if (!loader || !buttonText) return;
-    const PRESSKIT_PATH = './assets/files/Presskit.docx';
-    const transitionDuration = getComputedStyle(loader).transitionDuration.split(',')[0].trim();
-    const LOADER_DURATION_MS = transitionDuration.endsWith('ms')
-      ? parseFloat(transitionDuration) + 50
-      : (parseFloat(transitionDuration) * 1000) + 50;
-    const RESET_DELAY_MS = 1000;
-    let isDownloading = false;
-
-    const setLoadingState = isLoading => {
-      downloadBtn.disabled = isLoading;
-      downloadBtn.classList.toggle('is-loading', isLoading);
-      buttonText.textContent = isLoading ? 'Bezig...' : 'Download kit';
-      if (!isLoading) loader.style.width = '0%';
-    };
-
-    const triggerDownload = () => {
-      const link = document.createElement('a');
-      link.href = PRESSKIT_PATH;
-      link.download = 'Presskit.docx';
-      link.rel = 'noopener';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    };
-
-    downloadBtn.addEventListener('click', () => {
-      if (isDownloading) return;
-      isDownloading = true;
-      setLoadingState(true);
-      loader.style.width = '0%';
-
-      requestAnimationFrame(() => {
-        loader.style.width = '100%';
-      });
-
+const LOGO_DELAY_MS = 100;
+const REST_DELAY_MS = 340;
+const logoRevealTarget = document.querySelector('[data-reveal-logo]');
+const revealTargets = Array.from(document.querySelectorAll('[data-reveal]'))
+  .filter((target) => !target.hasAttribute('data-reveal-logo'));
+const revealTargetsNow = () => {
+  requestAnimationFrame(() => {
+    if (logoRevealTarget) {
       setTimeout(() => {
-        triggerDownload();
-        setTimeout(() => {
-          setLoadingState(false);
-          isDownloading = false;
-        }, RESET_DELAY_MS);
-      }, LOADER_DURATION_MS);
+        logoRevealTarget.classList.add('is-visible');
+      }, LOGO_DELAY_MS);
+    }
+
+    setTimeout(() => {
+      revealTargets.forEach((target) => target.classList.add('is-visible'));
+    }, REST_DELAY_MS);
+  });
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', revealTargetsNow, { once: true });
+} else {
+  revealTargetsNow();
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      alert('Copied to clipboard');
+    })
+    .catch((err) => {
+      console.error('Failed to copy: ', err);
     });
+}
+
+const contactModal = document.getElementById('contactModal');
+const contactForm = document.getElementById('contactForm');
+const closeContactModalButton = document.getElementById('closeContactModal');
+const openContactButtons = document.querySelectorAll('.js-open-contact');
+const contactStatus = document.getElementById('contactStatus');
+const submitContactButton = document.getElementById('submitContact');
+const mailtoFallbackButton = document.getElementById('mailtoFallback');
+
+function buildMailtoUrl() {
+  const name = document.getElementById('contactName').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  const phone = document.getElementById('contactPhone').value.trim();
+  const message = document.getElementById('contactMessage').value.trim();
+
+  const subject = encodeURIComponent(`Nieuwe booking aanvraag van ${name || 'websitebezoeker'}`);
+  const body = encodeURIComponent(
+    `Naam: ${name || '-'}\nE-mail: ${email || '-'}\nTelefoon: ${phone || '-'}\n\nBericht:\n${message || '-'}`
+  );
+
+  return `mailto:info@studioieks.com?subject=${subject}&body=${body}`;
+}
+
+function openContactModal() {
+  contactModal.classList.add('is-open');
+  contactModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('contactName').focus();
+}
+
+function closeContactModal() {
+  contactModal.classList.remove('is-open');
+  contactModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+openContactButtons.forEach((button) => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    openContactModal();
+  });
+});
+
+closeContactModalButton.addEventListener('click', closeContactModal);
+
+contactModal.addEventListener('click', (event) => {
+  if (event.target === contactModal) {
+    closeContactModal();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && contactModal.classList.contains('is-open')) {
+    closeContactModal();
+  }
+});
+
+mailtoFallbackButton.addEventListener('click', () => {
+  window.location.href = buildMailtoUrl();
+});
+
+contactForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  submitContactButton.disabled = true;
+  submitContactButton.classList.add('opacity-70', 'cursor-not-allowed');
+  contactStatus.textContent = 'Bezig met verzenden...';
+
+  const payload = {
+    name: document.getElementById('contactName').value.trim(),
+    email: document.getElementById('contactEmail').value.trim(),
+    phone: document.getElementById('contactPhone').value.trim(),
+    message: document.getElementById('contactMessage').value.trim(),
+    _subject: 'Nieuwe booking aanvraag via Studio Ieks',
+    _template: 'table',
+    _captcha: 'false'
+  };
+
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/vandorstmaurice@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error('FormSubmit request failed');
+    }
+
+    contactStatus.textContent = 'Je aanvraag is verzonden. We nemen zo snel mogelijk contact op.';
+    contactForm.reset();
+  } catch (error) {
+    console.error(error);
+    contactStatus.textContent =
+      'Verzenden via lukte niet. Gebruik de knop "Open e-mail app".';
+  } finally {
+    submitContactButton.disabled = false;
+    submitContactButton.classList.remove('opacity-70', 'cursor-not-allowed');
   }
 });
