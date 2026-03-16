@@ -143,17 +143,16 @@ if (contactModal && closeContactModalButton && contactForm && contactStatus && s
     contactStatus.textContent = 'Bezig met verzenden...';
 
     const payload = {
+      access_key: '1a903d24-898e-48f9-90ba-e28e825da690',
       name: document.getElementById('contactName').value.trim(),
       email: document.getElementById('contactEmail').value.trim(),
       phone: document.getElementById('contactPhone').value.trim(),
       message: document.getElementById('contactMessage').value.trim(),
-      _subject: 'Nieuwe booking aanvraag via Studio Ieks',
-      _template: 'table',
-      _captcha: 'false'
+      subject: 'Nieuwe booking aanvraag via Studio Ieks'
     };
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/vandorstmaurice@gmail.com', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -163,7 +162,7 @@ if (contactModal && closeContactModalButton && contactForm && contactStatus && s
       });
 
       if (!response.ok) {
-        throw new Error('FormSubmit request failed');
+        throw new Error('Web3Forms request failed');
       }
 
       contactStatus.textContent = 'Je aanvraag is verzonden. We nemen zo snel mogelijk contact op.';
@@ -171,7 +170,7 @@ if (contactModal && closeContactModalButton && contactForm && contactStatus && s
     } catch (error) {
       console.error(error);
       contactStatus.textContent =
-        'Verzenden via lukte niet. Gebruik de knop "Open e-mail app".';
+        'Verzenden via Web3Forms lukte niet. Gebruik de knop "Open e-mail app".';
     } finally {
       submitContactButton.disabled = false;
       submitContactButton.classList.remove('opacity-70', 'cursor-not-allowed');

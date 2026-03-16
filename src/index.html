@@ -254,7 +254,8 @@
         </button>
       </div>
 
-      <form id="contactForm" class="space-y-3">
+      <form id="contactForm" class="space-y-3" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="1a903d24-898e-48f9-90ba-e28e825da690" />
         <div>
           <label for="contactName" class="block text-sm mb-1">Naam</label>
           <input id="contactName" name="name" class="contact-input" type="text" placeholder="" required />

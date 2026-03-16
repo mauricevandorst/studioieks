@@ -161,7 +161,7 @@ h4 {
   mix-blend-mode: screen;
   animation:
     portrait-gloss-initial 1.1s ease-out 0.25s both,
-    portrait-gloss-loop 6s ease-in-out 1.35s infinite;
+    portrait-gloss-loop 3s ease-in-out 1.35s infinite;
 }
 
 .signature-overlay {
@@ -1829,19 +1829,6 @@ video {
 .hover\:px-9:hover {
   padding-left: 2.25rem;
   padding-right: 2.25rem;
-}
-
-.hover\:text-white:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
-.hover\:text-white\/90:hover {
-  color: rgb(255 255 255 / 0.9);
-}
-
-.hover\:text-white\/80:hover {
-  color: rgb(255 255 255 / 0.8);
 }
 
 .hover\:opacity-80:hover {
